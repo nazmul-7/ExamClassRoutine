@@ -1,0 +1,140 @@
+<template>
+    <div>
+      <div v-if="$store.state.user">
+
+       <!--========= HEADER ==========-->
+      	<div class="app-header1 header py-1 d-flex"> 
+			<div class="container-fluid">
+				<div class="d-flex">
+					<a class="header-brand" href="/">
+						<img src="/img/logo.png" class="header-brand-img" alt="Claylist logo">
+					</a>
+					<div class="d-flex order-lg-2 ml-auto">
+						<div class="dropdown ">
+							<a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
+								<img  v-if="authUser.image!=null" :src="authUser.image" alt="profile-img" class="avatar avatar-md brround">
+								<img  v-else src="/img/profile.png" alt="profile-img" class="avatar avatar-md brround">
+							</a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
+								<a class="dropdown-item" @click="logout">
+									<i class="dropdown-icon icon icon-power"></i><a @click="logout" >Log Out </a>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+      <!--========= HEADER ==========-->
+      <!--========== ADMIN SIDE MENU one ========-->
+      <!-- <div class="app-sidebar__overlay" data-toggle="sidebar"></div> -->
+      <aside class="app-sidebar doc-sidebar">
+			<div class="app-sidebar__user clearfix">
+				<div class="dropdown user-pro-body">
+					<div>
+						<img v-if="authUser.image!=null" :src="authUser.image" alt="" class="avatar avatar-lg brround">
+						<img  v-else src="/img/profile.png" alt="" class="avatar avatar-lg brround">
+						<router-link to="/edit_profile" class="profile-img">
+								<span class="fa fa-pencil" aria-hidden="true"></span> 
+							</router-link>
+						</div>
+					<div class="user-info">
+						<h2>{{ authUser.name }}</h2>
+						<!-- <span>Web Designer</span> -->
+					</div>
+				</div>
+			</div>
+			<ul class="side-menu">
+				<template v-if="authUser.userType=='Admin'">
+					<li class="slide">
+						<router-link to="/" class="side-menu__item" :class=" $route.path == '/' ?'active': ''">
+							<i class="side-menu__icon fa fa-tachometer"></i><span class="side-menu__label">Dashboard</span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/teacher" class="side-menu__item" :class=" $route.path == '/teacher' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Teachers  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/student" class="side-menu__item" :class=" $route.path == '/student' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Students  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/custom_orders" class="side-menu__item" :class=" $route.path == '/custom_orders' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Class Routine  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/portfolios" class="side-menu__item" :class=" $route.path == '/portfolios' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Exam Routine  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/users" class="side-menu__item" :class=" $route.path == '/users' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Users  </span>
+						</router-link>
+					</li>
+				</template>
+				<template v-else-if="authUser.userType=='Teacher'"></template>
+				<template v-else-if="authUser.userType=='Student'"></template>
+				
+				
+				
+				<!-- <li class="slide">
+					<router-link to="/category" class="side-menu__item" :class=" $route.path == '/category' ?'active': ''">
+							<i class="side-menu__icon fa fa-rocket"></i><span class="side-menu__label">Category</span>
+					</router-link>
+				</li> -->
+
+				
+			</ul>
+			</aside>
+      <!--========== ADMIN SIDE MENU ========-->
+    	</div>
+    	<router-view/>
+    </div>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+    props: ['user'],
+    data(){
+       return {
+          isLoggedIn : true, 
+       }
+	}, 
+	methods:{
+		async logout() {
+			         this.loading = true
+       const res = await this.callApi('get',`/logout`)
+		if(res.status == 200){
+			this.$store.commit("setAuthInfo", false);
+			window.location = '/login'
+		}
+		else{
+			this.swr();
+		}
+		this.loading = false
+		 
+	}
+	},
+	// computed:{
+    //     ...mapGetters([
+    //           'setAuthInfo',      
+    //     ])
+    // },
+    async created(){
+		   this.$store.commit('setAuthInfo', this.user)
+		   
+	   	// const res = await this.callApi("get", `/app/count_pending_list`);
+		// if (res.status == 200) {
+		// 	this.$store.commit('setPendingList', res.data)
+			
+		// } 
+    }
+}
+</script>
