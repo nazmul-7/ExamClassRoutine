@@ -62,7 +62,7 @@
 						</router-link>
 					</li>
 					<li class="slide">
-						<router-link to="/custom_orders" class="side-menu__item" :class=" $route.path == '/custom_orders' ?'active': ''">
+						<router-link to="/admin_class_routine" class="side-menu__item" :class=" $route.path == '/admin_class_routine' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Class Routine  </span>
 						</router-link>
 					</li>

@@ -16,7 +16,7 @@ import users from './admin/pages/users'
 import teacher from './admin/pages/teacher'
 import student from './admin/pages/student'
 import portfolios from './admin/pages/portfolios'
-import custom_orders from './admin/pages/custom_orders'
+import admin_class_routine from './admin/pages/admin_class_routine'
  
 
 
@@ -63,9 +63,9 @@ const routes = [
         name: 'orders'
     },
     {
-        path: '/custom_orders', 
-        component: custom_orders, 
-        name: 'custom_orders'
+        path: '/admin_class_routine', 
+        component: admin_class_routine, 
+        name: 'admin_class_routine'
     },
     {
         path: '/portfolios', 

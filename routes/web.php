@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
    
  
-    // Route::get('/get_users', 'AdminController@getUsers');
-    Route::post('/admin_login', 'AdminController@adminLogin');
-    Route::post('/admin_registration', 'AdminController@adminRegistration');
+    
    
 
     //Category
@@ -72,9 +70,26 @@ Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
     //getDashboardData
     Route::get('getDashboardData', 'CrudController@getDashboardData');
 
+
+    // ------------------------------------------------------------------------------------------------
+
+    // Authentication Routes
+    Route::post('/admin_login', 'AdminController@adminLogin');
+    Route::post('/admin_registration', 'AdminController@adminRegistration');
+
     // New Routes
     Route::get('getDashboardData', 'HomeController@getDashboardData');
     Route::get('all_user_pagi', 'HomeController@all_user_pagi');
+    Route::get('/admin/class_routine', 'HomeController@admin_class_routine');
+    Route::post('/admin/class_routine/store', 'HomeController@admin_class_routine_store');
+    Route::post('/admin/class_routine/delete', 'HomeController@admin_class_routine_delete');
+
+    Route::get('/admin/all_teachers', 'HomeController@all_teachers');
+    Route::get('/admin/all_batch', 'HomeController@all_batch');
+    Route::get('/admin/all_course', 'HomeController@all_course');
+    Route::get('/admin/all_department', 'HomeController@all_department');
+
+
 
 });
 
