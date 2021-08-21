@@ -8,15 +8,17 @@ import home from './components/pages/home'
 import login from './admin/pages/login'
 import registration from './admin/pages/registration'
 import category from './admin/pages/category'
-import services from './admin/pages/product'
 import edit_profile from './admin/pages/edit_profile'
-import orders from './admin/pages/orders'
-import contact_us from './admin/pages/contact_us'
-import users from './admin/pages/users'
+import notice from './admin/pages/notice'
+import teacher_notice from './admin/pages/teacher_notice'
 import teacher from './admin/pages/teacher'
 import student from './admin/pages/student'
-import portfolios from './admin/pages/portfolios'
 import admin_class_routine from './admin/pages/admin_class_routine'
+import student_class_routine from './admin/pages/student_class_routine'
+import teacher_class_routine from './admin/pages/teacher_class_routine'
+import admin_exam_routine from './admin/pages/admin_exam_routine'
+import student_exam_routine from './admin/pages/student_exam_routine'
+import teacher_exam_routine from './admin/pages/teacher_exam_routine'
  
 
 
@@ -46,21 +48,10 @@ const routes = [
         component: category, 
         name: 'category'
     },
-    
     {
-        path: '/services', 
-        component: services, 
-        name: 'services'
-    },
-    {
-        path: '/contact_us', 
-        component: contact_us, 
-        name: 'contact_us'
-    },
-    {
-        path: '/orders', 
-        component: orders, 
-        name: 'orders'
+        path: '/notice', 
+        component: notice, 
+        name: 'notice'
     },
     {
         path: '/admin_class_routine', 
@@ -68,14 +59,34 @@ const routes = [
         name: 'admin_class_routine'
     },
     {
-        path: '/portfolios', 
-        component: portfolios, 
-        name: 'portfolios'
+        path: '/student_class_routine', 
+        component: student_class_routine, 
+        name: 'student_class_routine'
     },
     {
-        path: '/users', 
-        component: users, 
-        name: 'users'
+        path: '/teacher_class_routine', 
+        component: teacher_class_routine, 
+        name: 'teacher_class_routine'
+    },
+    {
+        path: '/teacher_notice', 
+        component: teacher_notice, 
+        name: 'teacher_notice'
+    },
+    {
+        path: '/student_exam_routine', 
+        component: student_exam_routine, 
+        name: 'student_exam_routine'
+    },
+    {
+        path: '/admin_exam_routine', 
+        component: admin_exam_routine, 
+        name: 'admin_exam_routine'
+    },
+    {
+        path: '/teacher_exam_routine', 
+        component: teacher_exam_routine, 
+        name: 'teacher_exam_routine'
     },
     {
         path: '/teacher', 

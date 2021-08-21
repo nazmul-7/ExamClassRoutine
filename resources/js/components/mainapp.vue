@@ -67,18 +67,62 @@
 						</router-link>
 					</li>
 					<li class="slide">
-						<router-link to="/portfolios" class="side-menu__item" :class=" $route.path == '/portfolios' ?'active': ''">
+						<router-link to="/admin_exam_routine" class="side-menu__item" :class=" $route.path == '/admin_exam_routine' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Exam Routine  </span>
 						</router-link>
 					</li>
 					<li class="slide">
+						<router-link to="/notice" class="side-menu__item" :class=" $route.path == '/notice' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Notice  </span>
+						</router-link>
+					</li>
+					<!-- <li class="slide">
 						<router-link to="/users" class="side-menu__item" :class=" $route.path == '/users' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Users  </span>
 						</router-link>
+					</li> -->
+				</template>
+				<template v-else-if="authUser.userType=='Teacher'">
+					<li class="slide">
+						<router-link to="/admin_class_routine" class="side-menu__item" :class=" $route.path == '/admin_class_routine' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Class Routine</span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/teacher_class_routine" class="side-menu__item" :class=" $route.path == '/teacher_class_routine' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">My Class Routine</span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/admin_exam_routine" class="side-menu__item" :class=" $route.path == '/admin_exam_routine' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Exam Routine  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/teacher_exam_routine" class="side-menu__item" :class=" $route.path == '/teacher_exam_routine' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">My Exam Routine  </span>
+						</router-link>
+					</li>
+						<li class="slide">
+						<router-link to="/teacher_notice" class="side-menu__item" :class=" $route.path == '/teacher_notice' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Notice  </span>
+						</router-link>
 					</li>
 				</template>
-				<template v-else-if="authUser.userType=='Teacher'"></template>
-				<template v-else-if="authUser.userType=='Student'"></template>
+				<template v-else-if="authUser.userType=='Student'">
+					<li class="slide">
+						<router-link to="/student_class_routine" class="side-menu__item" :class=" $route.path == '/student_class_routine' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Class Routine</span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/teacher_exam_routine" class="side-menu__item" :class=" $route.path == '/teacher_exam_routine' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Exam Routine</span>
+						</router-link>
+					</li>
+					
+				
+				</template>
 				
 				
 				

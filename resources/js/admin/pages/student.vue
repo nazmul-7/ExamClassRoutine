@@ -36,7 +36,7 @@
 												<table id="example" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
 													<thead>
 														<tr role="row">
-															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">ID</th>
+															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">No</th>
 															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Name</th>
 															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 101px;">Student ID</th>
 															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 101px;">Email</th>
@@ -48,7 +48,7 @@
 													</thead>
 													<tbody>												
 														<tr role="row" class="odd" v-for="(item,index) in userData" :key="index">
-															<td>{{item.id}}</td>
+															<td>{{index+1}}</td>
 															<td>{{item.name}}</td>
 															<td>{{item.studentId}}</td>
 															<td>{{item.email}}</td>

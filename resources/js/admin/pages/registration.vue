@@ -35,7 +35,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label text-dark">Department</label>
-                                            <input type="text" v-model="data.department" class="form-control" placeholder="Enter..">
+                                            <Select v-model="data.department"  placeholder="Please select a deparment" filterable>
+                                                <Option v-for="(item,index) in department_data"  :key="index" :value="item.name" >{{item.name}}</Option>
+                                            </Select>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label text-dark">Password</label>
@@ -57,11 +59,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label text-dark">Department</label>
-                                            <input type="text" v-model="data.department" class="form-control" placeholder="Enter..">
+                                            <Select v-model="data.department"  placeholder="Please select a deparment" filterable>
+                                                <Option v-for="(item,index) in department_data"  :key="index" :value="item.name" >{{item.name}}</Option>
+                                            </Select>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label text-dark">Batch</label>
-                                            <input type="text" v-model="data.batch" class="form-control" placeholder="Enter..">
+                                            <Select v-model="data.batch"  placeholder="Please select a course" filterable>
+                                                <Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
+                                            </Select>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label text-dark">Session</label>
@@ -120,9 +126,26 @@ export default {
 
             },
             confirm_password:'',
-            isLogging: false, 
+            isLogging: false,
+			batch_data:[],
+			department_data:[],
         }
-    }, 
+    },
+    computed:{
+      batchByDept(){
+          let arr = [];
+        if(this.data.department){
+            for(let d of this.batch_data){
+                if(d.department == this.data.department){
+                    arr.push(d)
+                }
+            }
+        }
+        else arr = this.batch_data
+
+        return arr
+      }  
+    },
 
     methods : {
         async login(){
@@ -176,6 +199,16 @@ export default {
             }
             this.isLogging = false
         }
+    },
+    async created(){
+        const [department,batch] = await Promise.all([
+			this.callApi('get','app/admin/all_department'),
+			this.callApi('get','app/admin/all_batch'),
+		]);
+		if( department.status == 200 &&  batch.status == 200){
+			this.batch_data = batch.data;
+			this.department_data = department.data;
+		}
     }
 }
 </script>
