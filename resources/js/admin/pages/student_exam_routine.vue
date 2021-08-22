@@ -3,7 +3,7 @@
       <div class="app-content  my-3 my-md-5">  
 		<div class="side-app">
 			<div class="page-header"> 
-				<h4 class="page-title">Class Routine Table</h4>
+				<h4 class="page-title">Exam Routine Table</h4>
 			</div>
 			<div class="row">
 				<div class="col-md-12 col-lg-12">
@@ -36,13 +36,6 @@
 						<template v-else>
 							<div class="table-responsive">
 								<div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-									<!-- <div class="row">
-										<div class="col-sm-12 col-md-12">
-											<div id="example_filter" class="dataTables_filter">
-												<label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example"></label>
-											</div>  
-										</div>
-									</div> -->
 									<div class="row">
 										<div class="col-sm-12">
 											<table id="example" class="table card-table table-bordered table-hover table-vcenter " role="grid" aria-describedby="example_info">
@@ -51,9 +44,9 @@
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Day</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Time</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semister</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
-														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th>
-														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Batch</th>
+														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th> -->
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
 														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;">Action</th> -->
 													</tr>
@@ -63,13 +56,10 @@
 														<td>{{item.day}}</td>
 														<td >{{item.time}}</td>
 														<td >{{item.department_name}}</td>
-														<td >{{item.course_name}}</td>
-														<td >{{item.teacher_name}}</td>
 														<td>{{item.batch_name}}</td>
+														<td >{{item.course_name}}</td>
+														<!-- <td >{{item.teacher_name}}</td> -->
 														<td>{{item.room}}</td>
-														<!-- <td>
-                                                            <button class="btn btn-info" @click="product_delete(item.id,index)">Delete</button>
-														</td> -->
 													</tr>
 												</tbody>  
 											</table>
@@ -197,7 +187,7 @@ export default {
 	},
 	methods : {
 		async getpaginate(page = 1){
-			const res  = await this.callApi('get',`app/admin/class_routine?page=${page}`)
+			const res  = await this.callApi('get',`app/admin/exam_routine?page=${page}`)
 			if(res.status == 200){
 				this.allItems = res.data.data
 				this.pagination = res.data
@@ -217,7 +207,7 @@ export default {
 			if(this.formItem.room.trim()=='') return this.i('room is required')
 
 			this.loading = true
-        	let res = await this.callApi('post',`app/admin/class_routine/store`,this.formItem)
+        	let res = await this.callApi('post',`app/admin/exam_routine/store`,this.formItem)
 			if(res.status==200 || res.status == 201){
 				this.s('Order added successfully!')
 				this.allItems.unshift(res.data);
@@ -239,7 +229,7 @@ export default {
 				id:id
 			}
 			this.loading = true
-			const res = await this.callApi('post',`/app/admin/class_routine/delete`,ob)
+			const res = await this.callApi('post',`/app/admin/exam_routine/delete`,ob)
 			if(res.status == 200){
 				this.i(' order has been deleted successfully!')
 				this.allItems.splice(index,1)
@@ -252,7 +242,7 @@ export default {
 	 
 		async getAllData(){
 			this.loading = true
-			const res = await this.callApi('get',`app/student/class_routine`)
+			const res = await this.callApi('get',`app/student/exam_routine`)
 			if(res.status == 200){
 				this.allItems = res.data.data
 				delete res.data.data

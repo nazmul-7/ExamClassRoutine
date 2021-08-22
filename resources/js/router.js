@@ -7,7 +7,9 @@ import home from './components/pages/home'
 
 import login from './admin/pages/login'
 import registration from './admin/pages/registration'
-import category from './admin/pages/category'
+import courses from './admin/pages/courses'
+import departments from './admin/pages/departments'
+import batches from './admin/pages/batches'
 import edit_profile from './admin/pages/edit_profile'
 import notice from './admin/pages/notice'
 import teacher_notice from './admin/pages/teacher_notice'
@@ -44,9 +46,9 @@ const routes = [
        
     },
     {
-        path: '/category', 
-        component: category, 
-        name: 'category'
+        path: '/courses', 
+        component: courses, 
+        name: 'courses'
     },
     {
         path: '/notice', 
@@ -97,6 +99,16 @@ const routes = [
         path: '/student', 
         component: student, 
         name: 'student'
+    },
+    {
+        path: '/departments', 
+        component: departments, 
+        name: 'departments'
+    },
+    {
+        path: '/batches', 
+        component: batches, 
+        name: 'batches'
     },
     {
         path: '/edit_profile', 

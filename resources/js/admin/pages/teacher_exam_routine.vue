@@ -3,7 +3,7 @@
       <div class="app-content  my-3 my-md-5">  
 		<div class="side-app">
 			<div class="page-header"> 
-				<h4 class="page-title">Class Routine Table</h4>
+				<h4 class="page-title">Exam Routine Table</h4>
 			</div>
 			<div class="row">
 				<div class="col-md-12 col-lg-12">
@@ -52,8 +52,8 @@
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Time</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
-														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th>
-														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Batch</th>
+														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th> -->
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semister</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
 														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;">Action</th> -->
 													</tr>
@@ -64,7 +64,7 @@
 														<td >{{item.time}}</td>
 														<td >{{item.department_name}}</td>
 														<td >{{item.course_name}}</td>
-														<td >{{item.teacher_name}}</td>
+														<!-- <td >{{item.teacher_name}}</td> -->
 														<td>{{item.batch_name}}</td>
 														<td>{{item.room}}</td>
 														<!-- <td>
@@ -90,7 +90,7 @@
 		</div>
 		<Modal width="720" v-model="addModal" :mask-closable="false"  :closable="false" >
 			<div class="card-header">
-				<h3 class="card-title">Add Payment</h3>
+				<h3 class="card-title">Add</h3>
 			</div>
 			<div class="card m-b-20">
 				<div class="card-body">
@@ -103,7 +103,15 @@
 									</Select>
 								</div>
 							</div>
-							<div class="col-md-12">
+								<div class="col-md-12">
+								<div class="form-group">
+									<label class="form-label" >Semister</label>
+									<Select v-model="formItem.batch_name"  placeholder="Please select a course" filterable>
+										<Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
+									</Select>
+								</div>
+							</div>
+							<!-- <div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Semister</label>
 									<Select v-model="formItem.semister"  placeholder="Please select a course">
@@ -111,7 +119,7 @@
 										<Option value="Summer" >Summer</Option>
 									</Select>
 								</div>
-							</div>
+							</div> -->
 							<div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Day</label>
@@ -135,22 +143,15 @@
 									</Select>
 								</div>
 							</div>
-							<div class="col-md-12">
+							<!-- <div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Teacher</label>
 									<Select v-model="formItem.teacher_name"  placeholder="Please select a course" filterable>
 										<Option v-for="(item,index) in teacher_data"  :key="index" :value="item.name" >{{item.name}}</Option>
 									</Select>
 								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="form-label" >Batch</label>
-									<Select v-model="formItem.batch_name"  placeholder="Please select a course" filterable>
-										<Option v-for="(item,index) in batch_data"  :key="index" :value="item.name" >{{item.name}}</Option>
-									</Select>
-								</div>
-							</div>
+							</div> -->
+						
 							<div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Room Number</label>
@@ -183,7 +184,7 @@ export default {
 				day:'',
 				time:'',
 				department_name:'',
-				teacher_name:'',
+				// teacher_name:'',
 				batch_name:'',
 				semister:'',
 				room:'',
@@ -195,6 +196,21 @@ export default {
 			loading:false,			 
 		}
 	},
+	computed:{
+      batchByDept(){
+          let arr = [];
+        if(this.formItem.department_name){
+            for(let d of this.batch_data){
+                if(d.department == this.formItem.department_name){
+                    arr.push(d)
+                }
+            }
+        }
+        else arr = this.batch_data
+
+        return arr
+      }  
+    },
 	methods : {
 		async getpaginate(page = 1){
 			const res  = await this.callApi('get',`app/admin/class_routine?page=${page}`)
@@ -211,15 +227,15 @@ export default {
 			if(this.formItem.time.trim()=='') return this.i('Time is required')
 			if(this.formItem.department_name.trim() =='') return this.i('Department is required')
 			if(this.formItem.batch_name.trim()=='') return this.i('Batch is required')
-			if(this.formItem.semister.trim()=='') return this.i('Semister is required')
+			// if(this.formItem.semister.trim()=='') return this.i('Semister is required')
 			if(this.formItem.course_name.trim() =='') return this.i('Course is required')
-			if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
+			// if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
 			if(this.formItem.room.trim()=='') return this.i('room is required')
 
 			this.loading = true
-        	let res = await this.callApi('post',`app/admin/class_routine/store`,this.formItem)
+        	let res = await this.callApi('post',`app/admin/exam_routine/store`,this.formItem)
 			if(res.status==200 || res.status == 201){
-				this.s('Order added successfully!')
+				this.s('Routine added successfully!')
 				this.allItems.unshift(res.data);
 				this.addModal=false
 				this.pagesList = []
@@ -232,16 +248,16 @@ export default {
 		},		 
 		//Delete
 		async product_delete(id,index){
-			if(!confirm("Are you sure to delete this payment")){
+			if(!confirm("Are you sure to delete this routine")){
 				return;
 			}
 			let ob = {
 				id:id
 			}
 			this.loading = true
-			const res = await this.callApi('post',`/app/admin/class_routine/delete`,ob)
+			const res = await this.callApi('post',`/app/admin/exam_routine/delete`,ob)
 			if(res.status == 200){
-				this.i(' order has been deleted successfully!')
+				this.i(' Routine has been deleted successfully!')
 				this.allItems.splice(index,1)
 			}
 			else{
@@ -252,7 +268,7 @@ export default {
 	 
 		async getAllData(){
 			this.loading = true
-			const res = await this.callApi('get',`app/teacher/class_routine`)
+			const res = await this.callApi('get',`app/admin/exam_routine`)
 			if(res.status == 200){
 				this.allItems = res.data.data
 				delete res.data.data
@@ -270,18 +286,18 @@ export default {
 	  	await this.getAllData() 
 		this.loading = false
 
-		// const [course,teacher,department,batch] = await Promise.all([
-		// 	this.callApi('get','app/admin/all_course'),
-		// 	this.callApi('get','app/admin/all_teachers'),
-		// 	this.callApi('get','app/admin/all_department'),
-		// 	this.callApi('get','app/admin/all_batch'),
-		// ]);
-		// if(course.status == 200 && teacher.status == 200 && department.status == 200 &&  batch.status == 200){
-		// 	this.course_data = course.data;
-		// 	this.teacher_data = teacher.data;
-		// 	this.batch_data = batch.data;
-		// 	this.department_data = department.data;
-		// }
+		const [course,teacher,department,batch] = await Promise.all([
+			this.callApi('get','app/admin/all_course'),
+			this.callApi('get','app/admin/all_teachers'),
+			this.callApi('get','app/admin/all_department'),
+			this.callApi('get','app/admin/all_batch'),
+		]);
+		if(course.status == 200 && teacher.status == 200 && department.status == 200 &&  batch.status == 200){
+			this.course_data = course.data;
+			this.teacher_data = teacher.data;
+			this.batch_data = batch.data;
+			this.department_data = department.data;
+		}
 	}, 
 	
 }

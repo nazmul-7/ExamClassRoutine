@@ -7,7 +7,8 @@
 			<div class="container-fluid">
 				<div class="d-flex">
 					<a class="header-brand" href="/">
-						<img src="/img/logo.png" class="header-brand-img" alt="Claylist logo">
+						<!-- <img src="/img/logo.png" class="header-brand-img" alt="Claylist logo"> -->
+						<h4>Project Name</h4>
 					</a>
 					<div class="d-flex order-lg-2 ml-auto">
 						<div class="dropdown ">
@@ -76,6 +77,21 @@
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Notice  </span>
 						</router-link>
 					</li>
+					<li class="slide">
+						<router-link to="/departments" class="side-menu__item" :class=" $route.path == '/departments' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Departments  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/batches" class="side-menu__item" :class=" $route.path == '/batches' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Batches  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/courses" class="side-menu__item" :class=" $route.path == '/courses' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Courses  </span>
+						</router-link>
+					</li>
 					<!-- <li class="slide">
 						<router-link to="/users" class="side-menu__item" :class=" $route.path == '/users' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Users  </span>
@@ -93,19 +109,19 @@
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">My Class Routine</span>
 						</router-link>
 					</li>
-					<li class="slide">
+					<!-- <li class="slide">
 						<router-link to="/admin_exam_routine" class="side-menu__item" :class=" $route.path == '/admin_exam_routine' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Exam Routine  </span>
 						</router-link>
-					</li>
+					</li> -->
 					<li class="slide">
 						<router-link to="/teacher_exam_routine" class="side-menu__item" :class=" $route.path == '/teacher_exam_routine' ?'active': ''">
-								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">My Exam Routine  </span>
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Exam Routine  </span>
 						</router-link>
 					</li>
 						<li class="slide">
 						<router-link to="/teacher_notice" class="side-menu__item" :class=" $route.path == '/teacher_notice' ?'active': ''">
-								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Notice  </span>
+							<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Notice  </span>
 						</router-link>
 					</li>
 				</template>
@@ -116,7 +132,7 @@
 						</router-link>
 					</li>
 					<li class="slide">
-						<router-link to="/teacher_exam_routine" class="side-menu__item" :class=" $route.path == '/teacher_exam_routine' ?'active': ''">
+						<router-link to="/student_exam_routine" class="side-menu__item" :class=" $route.path == '/student_exam_routine' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Exam Routine</span>
 						</router-link>
 					</li>

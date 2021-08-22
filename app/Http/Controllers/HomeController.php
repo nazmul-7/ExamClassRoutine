@@ -8,6 +8,7 @@ use App\Batch;
 use App\Course;
 use App\Notice;
 use App\Department;
+use App\ExamRoutine;
 use App\ClassRoutine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -103,16 +104,6 @@ class HomeController extends Controller
         $query =  ClassRoutine::orderBy('id', 'desc');
         return $query->paginate(10);
     }
-    public function student_class_routine(Request $request){
-        $batch = Auth::user()->batch;
-        $query =  ClassRoutine::where('batch_name',$batch)->orderBy('id', 'desc');
-        return $query->paginate(10);
-    }
-    public function teacher_class_routine(Request $request){
-        $batch = Auth::user()->name;
-        $query =  ClassRoutine::where('teacher_name',$batch)->orderBy('id', 'desc');
-        return $query->paginate(10);
-    }
     public function admin_class_routine_store(Request $request){
         $data = $request->all();
         return  ClassRoutine::create($data);
@@ -120,18 +111,45 @@ class HomeController extends Controller
     public function admin_class_routine_delete(Request $request){
         return  ClassRoutine::where('id', $request->id)->delete();
     }
+    
+    public function admin_exam_routine(Request $request){
+        $query =  ExamRoutine::orderBy('id', 'desc');
+        return $query->paginate(10);
+    }
+    public function admin_exam_routine_store(Request $request){
+        $data = $request->all();
+        return  ExamRoutine::create($data);
+    }
+    public function admin_exam_routine_delete(Request $request){
+        return  ExamRoutine::where('id', $request->id)->delete();
+    }
+
+    public function student_class_routine(Request $request){
+        $batch = Auth::user()->batch;
+        $query =  ClassRoutine::where('batch_name',$batch)->orderBy('id', 'desc');
+        return $query->paginate(10);
+    }
+    public function student_exam_routine(Request $request){
+        $batch = Auth::user()->batch;
+        $query =  ExamRoutine::where('batch_name',$batch)->orderBy('id', 'desc');
+        return $query->paginate(10);
+    }
+    public function teacher_class_routine(Request $request){
+        $batch = Auth::user()->name;
+        $query =  ClassRoutine::where('teacher_name',$batch)->orderBy('id', 'desc');
+        return $query->paginate(10);
+    }
+    public function teacher_exam_routine(Request $request){
+        $batch = Auth::user()->name;
+        $query =  ExamRoutine::where('teacher_name',$batch)->orderBy('id', 'desc');
+        return $query->paginate(10);
+    }
     public function all_teachers(Request $request){
         return  User::where('userType', "Teacher")->get();
     }
-    public function all_batch(Request $request){
-        return  Batch::all();
-    }
-    public function all_course(Request $request){
-        return  Course::all();
-    }
-    public function all_department(Request $request){
-        return  Department::all();
-    }
+
+
+
 
     public function admin_notice(Request $request){       
         return Notice::orderBy('id','desc')->paginate(10);
@@ -142,5 +160,54 @@ class HomeController extends Controller
     }
     public function admin_notice_delte(Request $request){
         return  Notice::where('id', $request->id)->delete();
+    }
+
+
+
+    public function all_course(Request $request){
+        return  Course::all();
+    }
+    public function all_course_add(Request $request){
+        $data = $request->all();
+        return  Course::create($data);
+    }
+    public function all_course_edit(Request $request){
+        $data = $request->all();
+        return  Course::where('id',$data['id'])->update($data);
+    }
+    public function all_course_delete(Request $request){
+        return  Course::where('id', $request->id)->delete();
+    }
+
+
+    public function all_department(Request $request){
+        return  Department::all();
+    }
+    public function all_department_add(Request $request){
+        $data = $request->all();
+        return  Department::create($data);
+    }
+    public function all_department_edit(Request $request){
+        $data = $request->all();
+        return  Department::where('id',$data['id'])->update($data);
+    }
+    public function all_department_delete(Request $request){
+        return  Department::where('id', $request->id)->delete();
+    }
+
+
+    public function all_batch(Request $request){
+        return  Batch::all();
+    }
+    public function all_batch_add(Request $request){
+        $data = $request->all();
+        return  Batch::create($data);
+    }
+    public function all_batch_edit(Request $request){
+        $data = $request->all();
+        return  Batch::where('id',$data['id'])->update($data);
+    }
+    public function all_batch_delete(Request $request){
+        return  Batch::where('id', $request->id)->delete();
     }
 }
