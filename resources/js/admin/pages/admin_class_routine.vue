@@ -53,6 +53,7 @@
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Session</th>
 														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semester</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;" v-if="authUser.userType == 'Admin'">Action</th>
@@ -66,6 +67,7 @@
 														<td >{{item.course_name}}</td>
 														<td >{{item.teacher_name}}</td>
 														<td>{{item.batch_name}}</td>
+														<td>{{item.semister}}</td>
 														<td>{{item.room}}</td>
 														<td v-if="authUser.userType == 'Admin'">
 															<!-- <button class="btn btn-primary" @click="isEditOn(item,index)">Edit</button> -->
@@ -106,21 +108,22 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label class="form-label" >Semester</label>
+									<label class="form-label" >Session</label>
 									<Select v-model="formItem.batch_name"  placeholder="Please select a Semester" filterable>
 										<Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
 									</Select>
 								</div>
 							</div>
-							<!-- <div class="col-md-12">
+							<div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Semester</label>
-									<Select v-model="formItem.semister"  placeholder="Please select a course">
+									<input type="text"  class="form-control" v-model="formItem.semister"  placeholder="Semester">
+									<!-- <Select v-model="formItem.semister"  placeholder="Please select a course">
 										<Option value="Spring" >Spring</Option>
 										<Option value="Summer" >Summer</Option>
-									</Select>
+									</Select> -->
 								</div>
-							</div> -->
+							</div>
 							<div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Day</label>
