@@ -52,8 +52,8 @@
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Time</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
-														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th> -->
-														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semister</th>
+														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teachers</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semester</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
 														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;">Action</th> -->
 													</tr>
@@ -64,7 +64,7 @@
 														<td >{{item.time}}</td>
 														<td >{{item.department_name}}</td>
 														<td >{{item.course_name}}</td>
-														<!-- <td >{{item.teacher_name}}</td> -->
+														<td >{{item.teachers | allTeacherName}}</td>
 														<td>{{item.batch_name}}</td>
 														<td>{{item.room}}</td>
 														<!-- <td>
@@ -105,7 +105,7 @@
 							</div>
 								<div class="col-md-12">
 								<div class="form-group">
-									<label class="form-label" >Semister</label>
+									<label class="form-label" >Semester</label>
 									<Select v-model="formItem.batch_name"  placeholder="Please select a course" filterable>
 										<Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
 									</Select>
@@ -113,7 +113,7 @@
 							</div>
 							<!-- <div class="col-md-12">
 								<div class="form-group">
-									<label class="form-label" >Semister</label>
+									<label class="form-label" >Semester</label>
 									<Select v-model="formItem.semister"  placeholder="Please select a course">
 										<Option value="Spring" >Spring</Option>
 										<Option value="Summer" >Summer</Option>
@@ -213,7 +213,7 @@ export default {
     },
 	methods : {
 		async getpaginate(page = 1){
-			const res  = await this.callApi('get',`app/admin/class_routine?page=${page}`)
+			const res  = await this.callApi('get',`app/teacher/class_routine?page=${page}`)
 			if(res.status == 200){
 				this.allItems = res.data.data
 				this.pagination = res.data
@@ -227,13 +227,13 @@ export default {
 			if(this.formItem.time.trim()=='') return this.i('Time is required')
 			if(this.formItem.department_name.trim() =='') return this.i('Department is required')
 			if(this.formItem.batch_name.trim()=='') return this.i('Batch is required')
-			// if(this.formItem.semister.trim()=='') return this.i('Semister is required')
+			// if(this.formItem.semister.trim()=='') return this.i('Semester is required')
 			if(this.formItem.course_name.trim() =='') return this.i('Course is required')
 			// if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
 			if(this.formItem.room.trim()=='') return this.i('room is required')
 
 			this.loading = true
-        	let res = await this.callApi('post',`app/admin/exam_routine/store`,this.formItem)
+        	let res = await this.callApi('post',`app/teacher/exam_routine/store`,this.formItem)
 			if(res.status==200 || res.status == 201){
 				this.s('Routine added successfully!')
 				this.allItems.unshift(res.data);
@@ -268,7 +268,7 @@ export default {
 	 
 		async getAllData(){
 			this.loading = true
-			const res = await this.callApi('get',`app/admin/exam_routine`)
+			const res = await this.callApi('get',`app/teacher/exam_routine`)
 			if(res.status == 200){
 				this.allItems = res.data.data
 				delete res.data.data

@@ -16,7 +16,7 @@
 									<button class="btn btn-primary" @click="searchByEmail"><i class="fa fa-search"></i></button>
 									</label> -->
 								</div>
-								<div class="card_add_data btn btn-primary mar_b10" @click="addModal = true">
+								<div  v-if="authUser.userType == 'Admin'" class="card_add_data btn btn-primary mar_b10" @click="addModal = true">
 									Add New
 								</div> 
 							</div>
@@ -52,10 +52,10 @@
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Time</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
-														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th> -->
-														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semister</th>
+														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teachers</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semester</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
-														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;">Action</th>
+														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;"  v-if="authUser.userType == 'Admin'">Action</th>
 													</tr>
 												</thead>
 												<tbody>												
@@ -64,10 +64,10 @@
 														<td >{{item.time}}</td>
 														<td >{{item.department_name}}</td>
 														<td >{{item.course_name}}</td>
-														<!-- <td >{{item.teacher_name}}</td> -->
+														<td >{{item.teachers | allTeacherName}}</td>
 														<td>{{item.batch_name}}</td>
 														<td>{{item.room}}</td>
-														<td>
+														<td  v-if="authUser.userType == 'Admin'">
 															<!-- <button class="btn btn-primary" @click="isEditOn(item,index)">Edit</button> -->
                                                             <button class="btn btn-info" @click="product_delete(item.id,index)">Delete</button>
 														</td>
@@ -106,7 +106,7 @@
 							</div>
 								<div class="col-md-12">
 								<div class="form-group">
-									<label class="form-label" >Semister</label>
+									<label class="form-label" >Semester</label>
 									<Select v-model="formItem.batch_name"  placeholder="Please select a course" filterable>
 										<Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
 									</Select>
@@ -114,7 +114,7 @@
 							</div>
 							<!-- <div class="col-md-12">
 								<div class="form-group">
-									<label class="form-label" >Semister</label>
+									<label class="form-label" >Semester</label>
 									<Select v-model="formItem.semister"  placeholder="Please select a course">
 										<Option value="Spring" >Spring</Option>
 										<Option value="Summer" >Summer</Option>
@@ -144,14 +144,14 @@
 									</Select>
 								</div>
 							</div>
-							<!-- <div class="col-md-12">
+							<div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Teacher</label>
-									<Select v-model="formItem.teacher_name"  placeholder="Please select a course" filterable>
-										<Option v-for="(item,index) in teacher_data"  :key="index" :value="item.name" >{{item.name}}</Option>
+									<Select v-model="selected_teacher" multiple placeholder="Please select teachers" filterable>
+										<Option v-for="(item,index) in teacher_data"  :key="index" :value="item.id" >{{item.name}}</Option>
 									</Select>
 								</div>
-							</div> -->
+							</div>
 						
 							<div class="col-md-12">
 								<div class="form-group">
@@ -180,12 +180,13 @@ export default {
 			batch_data:[],
 			teacher_data:[],
 			department_data:[],
+			selected_teacher:[],
 			addModal:false,
 			formItem:{
 				day:'',
 				time:'',
 				department_name:'',
-				// teacher_name:'',
+				// teacher_name:[],
 				batch_name:'',
 				semister:'',
 				room:'',
@@ -227,11 +228,25 @@ export default {
 			if(this.formItem.day.trim()=='') return this.i('Day is required')
 			if(this.formItem.time.trim()=='') return this.i('Time is required')
 			if(this.formItem.department_name.trim() =='') return this.i('Department is required')
-			if(this.formItem.batch_name.trim()=='') return this.i('Batch is required')
-			// if(this.formItem.semister.trim()=='') return this.i('Semister is required')
+			if(this.formItem.batch_name.trim()=='') return this.i('Semester is required')
+			// if(this.formItem.semister.trim()=='') return this.i('semester is required')
 			if(this.formItem.course_name.trim() =='') return this.i('Course is required')
-			// if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
+			if(this.selected_teacher.length == 0 ) return this.i('Teacher is required')
 			if(this.formItem.room.trim()=='') return this.i('room is required')
+
+			let formatTeachers = [];
+			for(let d of this.selected_teacher){
+				for(let t of this.teacher_data){
+					if(d == t.id){
+						let ob = {
+							teacher_name:t.name,
+							teacher_id:d,
+						}
+						formatTeachers.push(ob)
+					}
+				}
+			}
+			this.formItem.formatTeachers = formatTeachers
 
 			this.loading = true
         	let res = await this.callApi('post',`app/admin/exam_routine/store`,this.formItem)
@@ -239,7 +254,18 @@ export default {
 				this.s('Routine added successfully!')
 				this.allItems.unshift(res.data);
 				this.addModal=false
-				this.pagesList = []
+				this.pagesList = [];
+				this.formItem = {
+					day:'',
+					time:'',
+					department_name:'',
+					// teacher_name:[],
+					batch_name:'',
+					semister:'',
+					room:'',
+					course_name:'',
+				}
+				this.selected_teacher = []
 			}
 			else{
 				this.swr();

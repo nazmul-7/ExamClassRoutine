@@ -15,7 +15,7 @@
 				<div class="row row-cards">
 					<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 						<div class="card">
-							<router-link to="/users">
+							<router-link to="/">
 							<div class="card-body text-center feature">
 								<div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
 									<i class="icon icon-people text-primary"></i>
@@ -26,10 +26,10 @@
 						</div>  
 					</div>
 				</div>
-				<div class="row row-cards">
+				<div class="row row-cards" v-if="authUser.userType == 'Admin'">
 					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
 						<div class="card">
-							<router-link to="/users">
+							<router-link to="/teacher">
 							<div class="card-body text-center feature">
 								<div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
 									<i class="icon icon-people text-primary"></i>
@@ -42,7 +42,7 @@
 					</div>
 					<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
 						<div class="card">
-							<router-link to="/users">
+							<router-link to="/student">
 							<div class="card-body text-center feature">
 								<div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
 									<i class="icon icon-people text-primary"></i>

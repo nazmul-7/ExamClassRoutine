@@ -64,15 +64,15 @@
                                             </Select>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label text-dark">Batch</label>
+                                            <label class="form-label text-dark">Session</label>
                                             <Select v-model="data.batch"  placeholder="Please select a course" filterable>
                                                 <Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
                                             </Select>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label class="form-label text-dark">Session</label>
                                             <input type="text" v-model="data.session" class="form-control" placeholder="Enter..">
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <label class="form-label text-dark">Phone no</label>
                                             <input type="text" v-model="data.mobile" class="form-control" placeholder="Enter...">
@@ -166,7 +166,7 @@ export default {
                 if(this.data.studentId.trim()=='') return this.e('Student ID is required')
                 if(this.data.department.trim()=='') return this.e('Department is required')
                 if(this.data.batch.trim()=='') return this.e('Batch is required')
-                if(this.data.session.trim()=='') return this.e('Session is required')
+                // if(this.data.session.trim()=='') return this.e('Session is required')
                 if(this.data.mobile.trim()=='') return this.e('Phone no is required')
                 if(this.data.email.trim()=='') return this.e('Email is required')
                 if(this.data.password.trim()=='') return this.e('Password is required')

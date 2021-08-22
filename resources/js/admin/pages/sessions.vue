@@ -9,9 +9,9 @@
 					<div class="col-md-12 col-lg-12">
 						<div class="card">
 							<div class="card-header card_header_area">
-								<div class="card-title">Batches Data</div>
+								<div class="card-title">Sessions Data</div>
 								<div class="card_add_data btn btn-primary" @click="addModal = true">
-									Add Batch
+									Add Session
 								</div>
 							</div>
 							<div class="card-body">
@@ -35,8 +35,8 @@
 													<thead>
 														<tr role="row">
 															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">No</th>
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Batch Department</th>
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Batch Name</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Session Department</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Session Name</th>
 															<!-- <th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Image</th> -->
 															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 101px;">Action</th>
 														</tr> 
@@ -70,18 +70,18 @@
 					<!-- section-wrapper -->
 				</div>
 			</div>
-			<Modal v-model="addModal" :mask-closable="false" :closable="false" title="Add New Batch">
+			<Modal v-model="addModal" :mask-closable="false" :closable="false" title="Add New Session">
 				<div class="card m-b-20">
 					<div class="card-body">
 						<form>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Batch Department</label>
+								<label class="form-label" for="exampleInputEmail1">Session Department</label>
                                 <Select v-model="formItem.department"  placeholder="Please select a deparment" filterable>
                                     <Option v-for="(item,index) in department_data"  :key="index" :value="item.name" >{{item.name}}</Option>
                                 </Select>
 							</div>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Batch Name</label>
+								<label class="form-label" for="exampleInputEmail1">Session Name</label>
 								<input type="text" v-model="formItem.name" class="form-control" id="exampleInputname" placeholder="Enter Name">
 							</div>
 						</form>
@@ -94,18 +94,18 @@
 				</div>
 			</Modal>
 
-			<Modal :mask-closable="false" :closable="false" v-model="editModal"	title="Edit Batch">
+			<Modal :mask-closable="false" :closable="false" v-model="editModal"	title="Edit Session">
 				<div class="card m-b-20">
 					<div class="card-body">
 						<form>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Batch Department</label>
+								<label class="form-label" for="exampleInputEmail1">Session Department</label>
                                 <Select v-model="edit_form.department"  placeholder="Please select a deparment" filterable>
                                     <Option v-for="(item,index) in department_data"  :key="index" :value="item.name" >{{item.name}}</Option>
                                 </Select>
 							</div>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Batch Name</label>
+								<label class="form-label" for="exampleInputEmail1">Session Name</label>
 								<input type="text" v-model="edit_form.name" class="form-control" id="exampleInputname" placeholder="Enter  Name">
 							</div>
 						</form>
@@ -163,7 +163,7 @@ export default {
         	const res = await this.callApi('post',`app/admin/all_batch/add`,this.formItem)
 			if(res.status==201){
 				this.addModal=false
-				this.s('Batch added successfully!')
+				this.s('Session added successfully!')
 				this.categoryData.unshift(res.data)
 				this.loading = false
 				this.formItem={
@@ -182,7 +182,7 @@ export default {
 			this.loading = true
         	const res = await this.callApi('post', 'app/admin/all_batch/edit',this.edit_form)
 			if(res.status==200){
-				this.s('Batch updated successfully!')
+				this.s('Session updated successfully!')
 				this.editModal = false
 				this.categoryData[this.editIndex].name = this.edit_form.name
 				this.categoryData[this.editIndex].department = this.edit_form.department
@@ -199,7 +199,7 @@ export default {
 		},
 		//Delete
 		async category_delete(id,index){
-			if(!confirm("Are you sure to delete this Batch")){
+			if(!confirm("Are you sure to delete this Session")){
 				return;
 			}
 			let ob = {
@@ -208,7 +208,7 @@ export default {
 			this.loading = true
 			const res = await this.callApi('post',`app/admin/all_batch/delete`,ob)
 			if(res.status == 200){
-				this.i(' Batch have been successfully Deleted!')
+				this.i(' Session have been successfully Deleted!')
 				this.categoryData.splice(index,1)
 				this.pagination = res.data
 				this.loading = false

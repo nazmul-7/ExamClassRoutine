@@ -4,7 +4,22 @@ export default {
         return {
 
         }
-    }, 
+    },
+    filters:{
+        allTeacherName(item){
+            if(!item || item.length == 0) return '';
+            let names = '';
+            let i = 0;
+            for(let d of item){
+                if(i == 0) names += d.teacher_name;
+                else names += ', '+d.teacher_name;
+
+                i++;
+            }
+
+            return names
+        }
+    },
     computed: {
         ...mapGetters({
             authUser:'getAuthUser',

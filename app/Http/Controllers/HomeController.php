@@ -10,6 +10,7 @@ use App\Notice;
 use App\Department;
 use App\ExamRoutine;
 use App\ClassRoutine;
+use App\TeacherExamRoutine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -98,10 +99,10 @@ class HomeController extends Controller
         $searchString = $request->email;
         $userType = $request->userType? $request->userType : "Teacher";
         $query =  User::where('userType', $userType);
-        return $query->orderBy('id', 'desc')->paginate($total);
+        return $query->orderBy('id', 'asc')->paginate($total);
     }
     public function admin_class_routine(Request $request){
-        $query =  ClassRoutine::orderBy('id', 'desc');
+        $query =  ClassRoutine::orderBy('id', 'asc');
         return $query->paginate(10);
     }
     public function admin_class_routine_store(Request $request){
@@ -113,12 +114,24 @@ class HomeController extends Controller
     }
     
     public function admin_exam_routine(Request $request){
-        $query =  ExamRoutine::orderBy('id', 'desc');
+        $query =  ExamRoutine::with('teachers')->orderBy('id', 'asc');
         return $query->paginate(10);
     }
     public function admin_exam_routine_store(Request $request){
         $data = $request->all();
-        return  ExamRoutine::create($data);
+        $teacherData = $data['formatTeachers'];
+        unset($data['formatTeachers']);
+        $dd =   ExamRoutine::create($data);
+        foreach ($teacherData as  $value) {
+            $value['routine_id'] = $dd->id;
+            TeacherExamRoutine::create([
+                'routine_id' => $dd->id,
+                'teacher_name' => $value['teacher_name'],
+                'teacher_id' => $value['teacher_id'],
+            ]);
+        }
+        return $dd;
+
     }
     public function admin_exam_routine_delete(Request $request){
         return  ExamRoutine::where('id', $request->id)->delete();
@@ -126,22 +139,24 @@ class HomeController extends Controller
 
     public function student_class_routine(Request $request){
         $batch = Auth::user()->batch;
-        $query =  ClassRoutine::where('batch_name',$batch)->orderBy('id', 'desc');
+        $query =  ClassRoutine::where('batch_name',$batch)->orderBy('id', 'asc');
         return $query->paginate(10);
     }
     public function student_exam_routine(Request $request){
         $batch = Auth::user()->batch;
-        $query =  ExamRoutine::where('batch_name',$batch)->orderBy('id', 'desc');
+        $query =  ExamRoutine::with('teachers')->where('batch_name',$batch)->orderBy('id', 'asc');
         return $query->paginate(10);
     }
     public function teacher_class_routine(Request $request){
         $batch = Auth::user()->name;
-        $query =  ClassRoutine::where('teacher_name',$batch)->orderBy('id', 'desc');
+        $query =  ClassRoutine::where('teacher_name',$batch)->orderBy('id', 'asc');
         return $query->paginate(10);
     }
     public function teacher_exam_routine(Request $request){
-        $batch = Auth::user()->name;
-        $query =  ExamRoutine::where('teacher_name',$batch)->orderBy('id', 'desc');
+        $id = Auth::user()->id;
+        $query =  ExamRoutine::with('teachers')->whereHas('teachers', function ($query) use ($id){
+            $query->where('teacher_id',$id);
+        });
         return $query->paginate(10);
     }
     public function all_teachers(Request $request){

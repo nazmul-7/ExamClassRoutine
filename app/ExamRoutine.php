@@ -16,4 +16,8 @@ class ExamRoutine extends Model
         'room',
         'course_name',
     ];
+
+    public function teachers(){
+        return $this->hasMany('App\TeacherExamRoutine','routine_id');
+      }
 }

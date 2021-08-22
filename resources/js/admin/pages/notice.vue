@@ -35,7 +35,7 @@
 											<table id="example" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
 												<thead>
 													<tr role="row">
-														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">No</th>
+														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">No</th> -->
 														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;"> Title</th>
 														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Notice</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 101px;">Action</th>
@@ -43,7 +43,7 @@
 												</thead>
 												<tbody>												
 													<tr role="row" class="odd" v-for="(item,index) in msgList" :key="index">
-														<td>{{index + 1}}</td>
+														<!-- <td>{{index + 1}}</td> -->
 														<td>{{item.title}}</td>
 														<td>{{item.note}}</td> 
 														<td>

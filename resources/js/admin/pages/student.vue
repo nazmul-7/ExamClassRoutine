@@ -52,7 +52,7 @@
 															<td>{{item.name}}</td>
 															<td>{{item.studentId}}</td>
 															<td>{{item.email}}</td>
-															<td>{{item.phone}}</td>
+															<td>{{item.mobile}}</td>
 															<td>{{item.department}}</td>
 															<td>{{item.batch}}</td>
 															<td>{{item.session}}</td>

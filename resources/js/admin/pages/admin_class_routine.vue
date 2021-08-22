@@ -53,7 +53,7 @@
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th>
-														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semister</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semester</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;" v-if="authUser.userType == 'Admin'">Action</th>
 													</tr>
@@ -106,15 +106,15 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label class="form-label" >Semister</label>
-									<Select v-model="formItem.batch_name"  placeholder="Please select a course" filterable>
+									<label class="form-label" >Semester</label>
+									<Select v-model="formItem.batch_name"  placeholder="Please select a Semester" filterable>
 										<Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
 									</Select>
 								</div>
 							</div>
 							<!-- <div class="col-md-12">
 								<div class="form-group">
-									<label class="form-label" >Semister</label>
+									<label class="form-label" >Semester</label>
 									<Select v-model="formItem.semister"  placeholder="Please select a course">
 										<Option value="Spring" >Spring</Option>
 										<Option value="Summer" >Summer</Option>
@@ -147,7 +147,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label class="form-label" >Teacher</label>
-									<Select v-model="formItem.teacher_name"  placeholder="Please select a course" filterable>
+									<Select v-model="formItem.teacher_name"  placeholder="Please select a teacher" filterable>
 										<Option v-for="(item,index) in teacher_data"  :key="index" :value="item.name" >{{item.name}}</Option>
 									</Select>
 								</div>
@@ -228,7 +228,7 @@ export default {
 			if(this.formItem.time.trim()=='') return this.i('Time is required')
 			if(this.formItem.department_name.trim() =='') return this.i('Department is required')
 			if(this.formItem.batch_name.trim()=='') return this.i('Batch is required')
-			// if(this.formItem.semister.trim()=='') return this.i('Semister is required')
+			// if(this.formItem.semister.trim()=='') return this.i('Semester is required')
 			if(this.formItem.course_name.trim() =='') return this.i('Course is required')
 			if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
 			if(this.formItem.room.trim()=='') return this.i('room is required')

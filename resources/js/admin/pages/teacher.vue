@@ -49,7 +49,7 @@
 															<td>{{index+1}}</td>
 															<td>{{item.name}}</td>
 															<td>{{item.email}}</td>
-															<td>{{item.phone}}</td>
+															<td>{{item.mobile}}</td>
 															<td>{{item.designation}}</td>
 															<td>{{item.department}}</td>
  															<!-- <td>

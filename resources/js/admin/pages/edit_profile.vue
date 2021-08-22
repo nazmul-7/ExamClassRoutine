@@ -19,21 +19,7 @@
 									<div class="card-body">
 										
 											<div class="row mb-2">
-												<div class="col-auto">
-													<Upload v-if="profileImageOn"
-															type="drag"
-															:with-credentials="true"
-															:headers="crfObj"
-															:on-success="handleImageUpload" 
-															name="img"
-															action="/uploadCategory">
-															<div class="avatar brround avatar-xl" >
-																<Icon type="ios-camera"  ></Icon>
-																<p>Click or drag files here to upload</p>
-															</div>
-													</Upload>
- 													<img v-else class="avatar brround avatar-xl" :src="image" alt="Avatar-img">												
-												</div>
+												
 												<div class="col">
 													<h3 class="mb-1 "> {{profileData.name}}</h3>
 													<p class="mb-4 ">{{profileData.userType}}</p>
@@ -84,27 +70,27 @@
 											<div class="col-sm-6 col-md-3">
 												<div class="form-group">
 													<label class="form-label">Contact Number</label>
- 													<input type="text" class="form-control" v-model="formValue.phone" placeholder="your-email@domain.com">
+ 													<input type="text" class="form-control" v-model="formValue.mobile" placeholder="your-email@domain.com">
 												</div>
 											</div>
-											<div class="col-md-12">
+											<!-- <div class="col-md-12">
 												<div class="form-group">
 													<label class="form-label">Address</label>
 													<input type="text" class="form-control" v-model="formValue.address" placeholder="Home Address" >
 												</div>
-											</div>
-											<div class="col-sm-6 col-md-6">
+											</div> -->
+											<!-- <div class="col-sm-6 col-md-6">
 												<div class="form-group">
 													<label class="form-label">City</label>
 													<input type="text" class="form-control" v-model="formValue.city" placeholder="City" >
 												</div>
-											</div>
-											<div class="col-sm-6 col-md-6">
+											</div> -->
+											<!-- <div class="col-sm-6 col-md-6">
 												<div class="form-group">
 													<label class="form-label">State</label>
 													<input type="text" class="form-control" v-model="formValue.state" placeholder="State" >
 												</div>
-											</div> 
+											</div>  -->
 										</div>
 									</div>
 									<div class="card-footer text-right">
@@ -133,10 +119,8 @@ export default {
              formValue:{
 				 name:'',
 				 email:'',
-				 phone:'',
+				 mobile:'',
 				 address:'',
-				 city:'',
-				 state:'',
  			 },
 			 image:"",
              passwordValue:{
@@ -201,9 +185,9 @@ export default {
 	  this.loading = false
     },
     async infoUpdate() { 
-      if (this.formValue.name.trim() == "") return this.e("Username can not be empty! !");
-      if (this.formValue.email.trim() == "") return this.e("Email can not be empty! !");
-	  if (this.formValue.phone.trim() == "") return this.e("Phone can not be empty! !");
+    //   if (this.formValue.name.trim() == "") return this.e("Username can not be empty! !");
+    //   if (this.formValue.email.trim() == "") return this.e("Email can not be empty! !");
+	//   if (this.formValue.mobile.trim() == "") return this.e("Phone can not be empty! !");
 	  this.loading = true
           const res = await this.callApi(
         "put",

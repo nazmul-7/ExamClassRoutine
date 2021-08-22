@@ -44,9 +44,9 @@
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Day</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Time</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
-														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semister</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semester</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
-														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teacher</th> -->
+														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Teachers</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
 														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;">Action</th> -->
 													</tr>
@@ -58,7 +58,7 @@
 														<td >{{item.department_name}}</td>
 														<td>{{item.batch_name}}</td>
 														<td >{{item.course_name}}</td>
-														<!-- <td >{{item.teacher_name}}</td> -->
+														<td >{{item.teachers | allTeacherName}}</td>
 														<td>{{item.room}}</td>
 													</tr>
 												</tbody>  
@@ -201,7 +201,7 @@ export default {
 			if(this.formItem.time.trim()=='') return this.i('Time is required')
 			if(this.formItem.department_name.trim() =='') return this.i('Department is required')
 			if(this.formItem.batch_name.trim()=='') return this.i('Batch is required')
-			if(this.formItem.semister.trim()=='') return this.i('Semister is required')
+			if(this.formItem.semister.trim()=='') return this.i('Semester is required')
 			if(this.formItem.course_name.trim() =='') return this.i('Course is required')
 			if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
 			if(this.formItem.room.trim()=='') return this.i('room is required')

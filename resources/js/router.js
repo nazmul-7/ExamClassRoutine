@@ -9,7 +9,7 @@ import login from './admin/pages/login'
 import registration from './admin/pages/registration'
 import courses from './admin/pages/courses'
 import departments from './admin/pages/departments'
-import batches from './admin/pages/batches'
+import Sessions from './admin/pages/sessions'
 import edit_profile from './admin/pages/edit_profile'
 import notice from './admin/pages/notice'
 import teacher_notice from './admin/pages/teacher_notice'
@@ -106,9 +106,9 @@ const routes = [
         name: 'departments'
     },
     {
-        path: '/batches', 
-        component: batches, 
-        name: 'batches'
+        path: '/Sessions', 
+        component: Sessions, 
+        name: 'Sessions'
     },
     {
         path: '/edit_profile', 
