@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 19, 2021 at 05:09 PM
+-- Generation Time: Aug 22, 2021 at 03:23 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -40,11 +40,12 @@ CREATE TABLE `batches` (
 --
 
 INSERT INTO `batches` (`id`, `department`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'CSE', '38th-Section A', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
+(1, 'BBA', '38th-Section A', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
 (2, 'CSE', '38th-Section B', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
 (3, 'CSE', '38th-Section C', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
 (4, 'CSE', '38th-Section D', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(6, 'CSE', '38th-Section E', '2021-08-18 23:23:05', '2021-08-18 23:23:18');
+(6, 'CSE', '38th-Section E', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
+(7, 'EEE', '1', '2021-08-22 01:02:12', '2021-08-22 01:02:12');
 
 -- --------------------------------------------------------
 
@@ -58,7 +59,7 @@ CREATE TABLE `class_routines` (
   `time` varchar(191) NOT NULL,
   `department_name` varchar(191) NOT NULL,
   `course_name` varchar(191) NOT NULL,
-  `semister` varchar(191) NOT NULL,
+  `semister` varchar(191) DEFAULT NULL,
   `batch_name` varchar(191) NOT NULL,
   `teacher_name` varchar(191) NOT NULL,
   `room` varchar(191) DEFAULT NULL,
@@ -77,48 +78,12 @@ INSERT INTO `class_routines` (`id`, `day`, `time`, `department_name`, `course_na
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contact_us`
---
-
-CREATE TABLE `contact_us` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `email` varchar(198) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `company_name` varchar(255) DEFAULT NULL,
-  `current_website` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `state` varchar(255) DEFAULT NULL,
-  `note` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `contact_us`
---
-
-INSERT INTO `contact_us` (`id`, `first_name`, `last_name`, `email`, `phone`, `company_name`, `current_website`, `city`, `state`, `note`, `created_at`, `updated_at`) VALUES
-(1, 'juha', 'nasuha', 'nasuha@gmail.com', '+33333355', 'AppifyLab', 'appifylab.com', 'sylhet', 'bangladesh', 'this is note. \r\nthis is note. this is note. this is note. this is note. \r\nthis is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. \r\nthis is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. ', '2021-01-03 06:37:02', '2021-01-03 06:37:02'),
-(4, 'juha', 'nasuha', 'nasuha@gmail.com', '+33333355', 'AppifyLab', 'appifylab.com', 'sylhet', 'bangladesh', 'this is note. \r\nthis is note. this is note. this is note. this is note. \r\nthis is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. \r\nthis is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. this is note. ', '2021-01-03 06:56:53', '2021-01-03 06:56:53'),
-(5, 'gorib', 'khan', 'khan@homebolttech.com', '01681189844', NULL, NULL, 'gorib city', NULL, 'Some Note', '2021-01-03 18:07:18', '2021-01-03 18:07:18'),
-(6, 'nmn', 'nn', 'nn', 'nn', NULL, NULL, NULL, NULL, 'bb', '2021-01-03 18:10:45', '2021-01-03 18:10:45'),
-(7, 'ss', 'ss', 'snn', 'nn', NULL, NULL, NULL, NULL, 'this is new msg', '2021-01-03 18:11:18', '2021-01-03 18:11:18'),
-(8, 'sadek', 'w', 'sadek.hkm@gmail.com', '+88012123232', 'Fastitsolution', NULL, 'Sylhet', 'Sylhet', 'this is a test note', '2021-01-06 13:41:18', '2021-01-06 13:41:18'),
-(9, 'Kerpink', 'Williams', 'hi@gmail.com', '5019540489', 'John Handcock', NULL, 'Little Rock', 'AR', 'Test', '2021-01-27 01:43:16', '2021-01-27 01:43:16'),
-(10, 'Emaya', 'Moss', 'Mossemaya@gmail.com', '7035545225', 'The Doll House', 'N/A', 'Oxford', 'MS', 'Hello, \n\nIve spoken with a member of your team previously and I am interested in getting a logo designed in addition to a design for the face of our vending machine. I look forward to hearing from you.', '2021-02-24 02:27:58', '2021-02-24 02:27:58'),
-(11, 'Kerpink', 'Williams', 'testsh@gmail.com', '15019540489', '85-3353394', 'Test', 'SCOTT', 'AR', 'ho', '2021-02-24 15:31:32', '2021-02-24 15:31:32'),
-(12, 'nazmul', 'chowdhury', 'nazmulchowdhury4@gmail.com', '01681189844', 'CCompany', 'www.kerpink.com', 'test City', 'Test State', 'This is some good note...!', '2021-02-28 11:00:29', '2021-02-28 11:00:29');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `courses`
 --
 
 CREATE TABLE `courses` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -128,11 +93,10 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'CSE-1111', NULL, NULL),
-(2, 'CSE-1211', NULL, NULL),
-(3, 'CSE-1113', NULL, NULL),
-(4, 'CSE-1212', NULL, NULL);
+INSERT INTO `courses` (`id`, `code`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'CSE-1111', 'CSE-1111', NULL, NULL),
+(2, '', 'CSE-1211', NULL, NULL),
+(4, '', 'CSE-1212', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -166,13 +130,22 @@ CREATE TABLE `exam_routines` (
   `id` int(11) NOT NULL,
   `day` varchar(191) NOT NULL,
   `time` varchar(191) NOT NULL,
-  `course` int(10) NOT NULL,
-  `semister` varchar(191) NOT NULL,
-  `teacher` int(10) NOT NULL,
+  `department_name` varchar(191) NOT NULL,
+  `course_name` varchar(191) NOT NULL,
+  `semister` varchar(191) DEFAULT NULL,
+  `batch_name` varchar(191) NOT NULL,
+  `teacher_name` varchar(191) DEFAULT NULL,
   `room` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `exam_routines`
+--
+
+INSERT INTO `exam_routines` (`id`, `day`, `time`, `department_name`, `course_name`, `semister`, `batch_name`, `teacher_name`, `room`, `created_at`, `updated_at`) VALUES
+(3, 'Wednesday', '10:00AM - 11:00AM', 'CSE', 'CSE-1211', 'Spring', '38th (Section D)', 't1', '209', '2021-08-18 11:39:35', '2021-08-18 11:39:35');
 
 -- --------------------------------------------------------
 
@@ -203,6 +176,28 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2019_05_03_000001_create_customer_columns', 2),
 (11, '2019_05_03_000002_create_subscriptions_table', 2),
 (12, '2019_05_03_000003_create_subscription_items_table', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notices`
+--
+
+CREATE TABLE `notices` (
+  `id` int(11) NOT NULL,
+  `title` varchar(191) NOT NULL,
+  `note` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notices`
+--
+
+INSERT INTO `notices` (`id`, `title`, `note`, `created_at`, `updated_at`) VALUES
+(2, 'Title Two', 'Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two Notice Two ', '2021-08-21 20:10:35', '2021-08-21 20:10:35'),
+(3, 'Ttile 3', 'Note #', '2021-08-21 14:30:23', '2021-08-21 14:30:23');
 
 -- --------------------------------------------------------
 
@@ -254,7 +249,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `designation`, `department`, `studentId`, `batch`, `session`, `password`, `userType`, `created_at`, `updated_at`) VALUES
 (26, 'Admin', 'admin@gmail.com', '', NULL, NULL, NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Admin', '2021-02-23 22:38:51', '2021-02-23 22:38:51'),
 (27, 't1', 't1@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
-(28, 's2', 's2@gmail.com', '345689', NULL, 'cse', '1213030', '38', 'spring', '$2y$10$sKalnJQAmVfbYdRw.VoW4un77NlTLO/9CUwVtXDD8F3lHFqLVqpTS', 'Student', '2021-08-16 11:32:33', '2021-08-16 11:32:33');
+(28, 's2', 's2@gmail.com', '345689', NULL, 'cse', '1213030', '38th (Section D)', 'spring', '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Student', '2021-08-16 11:32:33', '2021-08-16 11:32:33'),
+(29, 'T2@gmail.com', 't2@gmail.com', '0158119898989', 'Senior', 'EEE', NULL, NULL, NULL, '$2y$10$9mrYwpP9KhtBsVK5ix.bR.EFWQzpt7HIoo/Bkfmzn7M..OoYTnGU2', 'Teacher', '2021-08-21 19:07:02', '2021-08-21 19:07:02');
 
 --
 -- Indexes for dumped tables
@@ -270,12 +266,6 @@ ALTER TABLE `batches`
 -- Indexes for table `class_routines`
 --
 ALTER TABLE `class_routines`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `contact_us`
---
-ALTER TABLE `contact_us`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -303,6 +293,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `notices`
+--
+ALTER TABLE `notices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -322,19 +318,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `batches`
 --
 ALTER TABLE `batches`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `class_routines`
 --
 ALTER TABLE `class_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `contact_us`
---
-ALTER TABLE `contact_us`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -346,19 +336,25 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `exam_routines`
 --
 ALTER TABLE `exam_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `notices`
+--
+ALTER TABLE `notices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `password_resets`
@@ -370,7 +366,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
