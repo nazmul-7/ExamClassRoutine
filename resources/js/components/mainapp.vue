@@ -58,6 +58,11 @@
 						</router-link>
 					</li>
 					<li class="slide">
+						<router-link to="/admin_teacher_courses" class="side-menu__item" :class=" $route.path == '/admin_teacher_courses' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Teachers Courses </span>
+						</router-link>
+					</li>
+					<li class="slide">
 						<router-link to="/student" class="side-menu__item" :class=" $route.path == '/student' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Students  </span>
 						</router-link>

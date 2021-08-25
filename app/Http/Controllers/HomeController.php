@@ -12,6 +12,7 @@ use App\Semester;
 use App\Department;
 use App\ExamRoutine;
 use App\ClassRoutine;
+use App\TeacherCourse;
 use App\TeacherExamRoutine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -242,6 +243,8 @@ class HomeController extends Controller
     public function all_semester_delete(Request $request){
         return  Semester::where('id', $request->id)->delete();
     }
+
+
     public function all_rooms(Request $request){
         return  Room::all();
     }
@@ -255,5 +258,20 @@ class HomeController extends Controller
     }
     public function all_rooms_delete(Request $request){
         return  Room::where('id', $request->id)->delete();
+    }
+
+    public function all_teacher_course(Request $request){
+        return  TeacherCourse::all();
+    }
+    public function all_teacher_course_add(Request $request){
+        $data = $request->all();
+        return  TeacherCourse::create($data);
+    }
+    public function all_teacher_course_edit(Request $request){
+        $data = $request->all();
+        return  TeacherCourse::where('id',$data['id'])->update($data);
+    }
+    public function all_teacher_course_delete(Request $request){
+        return  TeacherCourse::where('id', $request->id)->delete();
     }
 }

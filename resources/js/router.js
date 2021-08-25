@@ -18,8 +18,9 @@ import teacher_notice from './admin/pages/teacher_notice'
 import teacher from './admin/pages/teacher'
 import student from './admin/pages/student'
 import admin_class_routine from './admin/pages/admin_class_routine'
-import student_class_routine from './admin/pages/student_class_routine'
 import teacher_class_routine from './admin/pages/teacher_class_routine'
+import admin_teacher_courses from './admin/pages/admin_teacher_courses'
+import student_class_routine from './admin/pages/student_class_routine'
 import admin_exam_routine from './admin/pages/admin_exam_routine'
 import student_exam_routine from './admin/pages/student_exam_routine'
 import teacher_exam_routine from './admin/pages/teacher_exam_routine'
@@ -71,6 +72,11 @@ const routes = [
         path: '/teacher_class_routine', 
         component: teacher_class_routine, 
         name: 'teacher_class_routine'
+    },
+    {
+        path: '/admin_teacher_courses', 
+        component: admin_teacher_courses, 
+        name: 'admin_teacher_courses'
     },
     {
         path: '/teacher_notice', 
