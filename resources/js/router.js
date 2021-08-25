@@ -10,6 +10,8 @@ import registration from './admin/pages/registration'
 import courses from './admin/pages/courses'
 import departments from './admin/pages/departments'
 import Sessions from './admin/pages/sessions'
+import semester from './admin/pages/semester'
+import rooms from './admin/pages/rooms'
 import edit_profile from './admin/pages/edit_profile'
 import notice from './admin/pages/notice'
 import teacher_notice from './admin/pages/teacher_notice'
@@ -109,6 +111,16 @@ const routes = [
         path: '/Sessions', 
         component: Sessions, 
         name: 'Sessions'
+    },
+    {
+        path: '/semester', 
+        component: semester, 
+        name: 'semester'
+    },
+    {
+        path: '/rooms', 
+        component: rooms, 
+        name: 'rooms'
     },
     {
         path: '/edit_profile', 

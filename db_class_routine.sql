@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 22, 2021 at 03:23 PM
+-- Generation Time: Aug 25, 2021 at 03:42 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -73,7 +73,8 @@ CREATE TABLE `class_routines` (
 
 INSERT INTO `class_routines` (`id`, `day`, `time`, `department_name`, `course_name`, `semister`, `batch_name`, `teacher_name`, `room`, `created_at`, `updated_at`) VALUES
 (1, 'Saturday', '10:00AM - 11:00AM', 'CSE', 'Eng-1111', 'Spring', '38th (Section D)', 'Mr Abdul', '302', '2021-08-18 14:02:07', '2021-08-18 14:02:07'),
-(3, 'Wednesday', '10:00AM - 11:00AM', 'CSE', 'CSE-1211', 'Spring', '38th-Section C', 't1', '209', '2021-08-18 11:39:35', '2021-08-18 11:39:35');
+(3, 'Wednesday', '10:00AM - 11:00AM', 'CSE', 'CSE-1211', 'Spring', '38th-Section C', 't1', '209', '2021-08-18 11:39:35', '2021-08-18 11:39:35'),
+(5, 'Saturday', '43243', 'CSE', 'CSE-1111', '1', '38th-Section B', 'T2@gmail.com', 'fdfd', '2021-08-22 13:03:18', '2021-08-22 13:03:18');
 
 -- --------------------------------------------------------
 
@@ -85,6 +86,9 @@ CREATE TABLE `courses` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `credit` int(5) NOT NULL,
+  `class_time` int(5) NOT NULL,
+  `exam_time` int(5) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -93,10 +97,10 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `code`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'CSE-1111', 'CSE-1111', NULL, NULL),
-(2, '', 'CSE-1211', NULL, NULL),
-(4, '', 'CSE-1212', NULL, NULL);
+INSERT INTO `courses` (`id`, `code`, `name`, `credit`, `class_time`, `exam_time`, `created_at`, `updated_at`) VALUES
+(2, '', 'CSE-1211', 0, 0, 0, NULL, NULL),
+(4, '', 'CSE-1212', 0, 0, 0, NULL, NULL),
+(5, 'CSE-3011', 'Data Structure', 3, 3, 2, '2021-08-25 13:40:19', '2021-08-25 13:40:19');
 
 -- --------------------------------------------------------
 
@@ -145,7 +149,11 @@ CREATE TABLE `exam_routines` (
 --
 
 INSERT INTO `exam_routines` (`id`, `day`, `time`, `department_name`, `course_name`, `semister`, `batch_name`, `teacher_name`, `room`, `created_at`, `updated_at`) VALUES
-(3, 'Wednesday', '10:00AM - 11:00AM', 'CSE', 'CSE-1211', 'Spring', '38th (Section D)', 't1', '209', '2021-08-18 11:39:35', '2021-08-18 11:39:35');
+(3, 'Wednesday', '10:00AM - 11:00AM', 'CSE', 'CSE-1211', 'Spring', '38th (Section D)', 't1', '209', '2021-08-18 11:39:35', '2021-08-18 11:39:35'),
+(6, 'Sunday', '10-11', 'BBA', 'CSE-1111', NULL, '38th-Section A', NULL, '201,203', '2021-08-22 08:30:08', '2021-08-22 08:30:08'),
+(7, 'Sunday', '28-28', 'CSE', 'CSE-1111', NULL, '38th-Section C', NULL, '292,920', '2021-08-22 08:33:03', '2021-08-22 08:33:03'),
+(8, 'Wednesday', '12-12', 'CSE', 'CSE-1111', NULL, '38th-Section E', NULL, 'rewwr', '2021-08-22 10:38:02', '2021-08-22 10:38:02'),
+(9, 'Friday', 'fdfd', 'CSE', 'CSE-1211', 'fdfd', '38th-Section B', NULL, 'fdfd', '2021-08-22 13:11:30', '2021-08-22 13:11:30');
 
 -- --------------------------------------------------------
 
@@ -223,6 +231,84 @@ INSERT INTO `password_resets` (`id`, `email`, `token`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total` int(10) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
+(9, '200', 30, '2021-08-25 13:33:15', '2021-08-25 13:33:15'),
+(10, '201', 50, '2021-08-25 13:33:26', '2021-08-25 13:33:26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `semesters`
+--
+
+CREATE TABLE `semesters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total` int(10) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `semesters`
+--
+
+INSERT INTO `semesters` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
+(1, '38th-Section A', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
+(2, '38th-Section B', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
+(3, '38th-Section C', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
+(4, '38th-Section D', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
+(6, '38th-Section E', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
+(8, 'Batch 1', 50, '2021-08-25 13:23:04', '2021-08-25 13:23:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teacher_exam_routines`
+--
+
+CREATE TABLE `teacher_exam_routines` (
+  `id` int(11) NOT NULL,
+  `routine_id` int(10) NOT NULL,
+  `teacher_id` int(10) NOT NULL,
+  `teacher_name` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `teacher_exam_routines`
+--
+
+INSERT INTO `teacher_exam_routines` (`id`, `routine_id`, `teacher_id`, `teacher_name`, `created_at`, `updated_at`) VALUES
+(3, 0, 0, 't1', '2021-08-18 11:39:35', '2021-08-18 11:39:35'),
+(6, 0, 27, 't1', NULL, NULL),
+(7, 0, 29, 'T2@gmail.com', NULL, NULL),
+(8, 7, 27, 't1', '2021-08-22 08:33:03', '2021-08-22 08:33:03'),
+(9, 7, 29, 'T2@gmail.com', '2021-08-22 08:33:03', '2021-08-22 08:33:03'),
+(10, 8, 29, 'T2@gmail.com', '2021-08-22 10:38:02', '2021-08-22 10:38:02'),
+(11, 8, 27, 't1', '2021-08-22 10:38:02', '2021-08-22 10:38:02'),
+(12, 9, 27, 't1', '2021-08-22 13:11:30', '2021-08-22 13:11:30'),
+(13, 9, 29, 'T2@gmail.com', '2021-08-22 13:11:30', '2021-08-22 13:11:30');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -247,7 +333,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `designation`, `department`, `studentId`, `batch`, `session`, `password`, `userType`, `created_at`, `updated_at`) VALUES
-(26, 'Admin', 'admin@gmail.com', '', NULL, NULL, NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Admin', '2021-02-23 22:38:51', '2021-02-23 22:38:51'),
+(26, 'Admins', 'admin@gmail.com', '1234567', NULL, NULL, NULL, NULL, NULL, '$2y$10$n9nFgPnyIMlSjHQ2USDFnervaClpw5xO8dQ3PBueWytTHp6Y2nWna', 'Admin', '2021-02-23 22:38:51', '2021-08-22 09:15:40'),
 (27, 't1', 't1@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
 (28, 's2', 's2@gmail.com', '345689', NULL, 'cse', '1213030', '38th (Section D)', 'spring', '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Student', '2021-08-16 11:32:33', '2021-08-16 11:32:33'),
 (29, 'T2@gmail.com', 't2@gmail.com', '0158119898989', 'Senior', 'EEE', NULL, NULL, NULL, '$2y$10$9mrYwpP9KhtBsVK5ix.bR.EFWQzpt7HIoo/Bkfmzn7M..OoYTnGU2', 'Teacher', '2021-08-21 19:07:02', '2021-08-21 19:07:02');
@@ -305,6 +391,24 @@ ALTER TABLE `password_resets`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `semesters`
+--
+ALTER TABLE `semesters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `teacher_exam_routines`
+--
+ALTER TABLE `teacher_exam_routines`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -324,13 +428,13 @@ ALTER TABLE `batches`
 -- AUTO_INCREMENT for table `class_routines`
 --
 ALTER TABLE `class_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -342,7 +446,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `exam_routines`
 --
 ALTER TABLE `exam_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -361,6 +465,24 @@ ALTER TABLE `notices`
 --
 ALTER TABLE `password_resets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `semesters`
+--
+ALTER TABLE `semesters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `teacher_exam_routines`
+--
+ALTER TABLE `teacher_exam_routines`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`

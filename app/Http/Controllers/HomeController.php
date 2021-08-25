@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use DB;
 use Session;
 use App\User;
+use App\Room;
 use App\Batch;
 use App\Course;
 use App\Notice;
+use App\Semester;
 use App\Department;
 use App\ExamRoutine;
 use App\ClassRoutine;
@@ -224,5 +226,34 @@ class HomeController extends Controller
     }
     public function all_batch_delete(Request $request){
         return  Batch::where('id', $request->id)->delete();
+    }
+
+    public function all_semester(Request $request){
+        return  Semester::all();
+    }
+    public function all_semester_add(Request $request){
+        $data = $request->all();
+        return  Semester::create($data);
+    }
+    public function all_semester_edit(Request $request){
+        $data = $request->all();
+        return  Semester::where('id',$data['id'])->update($data);
+    }
+    public function all_semester_delete(Request $request){
+        return  Semester::where('id', $request->id)->delete();
+    }
+    public function all_rooms(Request $request){
+        return  Room::all();
+    }
+    public function all_rooms_add(Request $request){
+        $data = $request->all();
+        return  Room::create($data);
+    }
+    public function all_rooms_edit(Request $request){
+        $data = $request->all();
+        return  Room::where('id',$data['id'])->update($data);
+    }
+    public function all_rooms_delete(Request $request){
+        return  Room::where('id', $request->id)->delete();
     }
 }

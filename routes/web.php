@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/app/admin/all_batch', 'HomeController@all_batch');
+Route::get('/app/admin/all_semester', 'HomeController@all_semester');
 Route::get('/app/admin/all_department', 'HomeController@all_department');
 
 Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
@@ -88,6 +89,17 @@ Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
     Route::post('/admin/all_batch/add', 'HomeController@all_batch_add');
     Route::post('/admin/all_batch/edit', 'HomeController@all_batch_edit');
     Route::post('/admin/all_batch/delete', 'HomeController@all_batch_delete');
+
+    // Semester
+    Route::post('/admin/all_semester/add', 'HomeController@all_semester_add');
+    Route::post('/admin/all_semester/edit', 'HomeController@all_semester_edit');
+    Route::post('/admin/all_semester/delete', 'HomeController@all_semester_delete');
+
+    // Rooms
+    Route::get('/admin/all_rooms', 'HomeController@all_rooms');
+    Route::post('/admin/all_rooms/add', 'HomeController@all_rooms_add');
+    Route::post('/admin/all_rooms/edit', 'HomeController@all_rooms_edit');
+    Route::post('/admin/all_rooms/delete', 'HomeController@all_rooms_delete');
 
 
 

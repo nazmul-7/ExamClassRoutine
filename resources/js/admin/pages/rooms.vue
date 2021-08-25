@@ -9,9 +9,9 @@
 					<div class="col-md-12 col-lg-12">
 						<div class="card">
 							<div class="card-header card_header_area">
-								<div class="card-title">Courses Data</div>
+								<div class="card-title">Room Data</div>
 								<div class="card_add_data btn btn-primary" @click="addModal = true">
-									Add Course
+									Add Room
 								</div>
 							</div>
 							<div class="card-body">
@@ -35,11 +35,8 @@
 													<thead>
 														<tr role="row">
 															<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">No</th> -->
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Course Name</th>
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Course Code</th>
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Course Credit</th>
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Course Class Time</th>
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Course Exam Time</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Room Name</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Student Capacity</th>
 															<!-- <th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Image</th> -->
 															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 101px;">Action</th>
 														</tr> 
@@ -48,10 +45,7 @@
 														<tr role="row" class="odd" v-for="(item,index) in categoryData" :key="index">
 															<!-- <td>{{index+1}}</td> -->
 															<td>{{item.name}}</td>
-															<td>{{item.code}}</td>
-															<td>{{item.credit}}</td>
-															<td>{{item.class_time}}</td>
-															<td>{{item.exam_time}}</td>
+															<td>{{item.total}}</td>
 															<!-- <td class="category_img"><img :src="item.image" alt=""></td> -->
 															<td>
 																<!-- <button class="btn btn-gray" @click="viewImage(item,index)">View Image</button> -->
@@ -76,29 +70,17 @@
 					<!-- section-wrapper -->
 				</div>
 			</div>
-			<Modal v-model="addModal" :mask-closable="false" :closable="false" title="Add New Course">
+			<Modal v-model="addModal" :mask-closable="false" :closable="false" title="Add New Room">
 				<div class="card m-b-20">
 					<div class="card-body">
 						<form>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Course Name</label>
+								<label class="form-label" for="exampleInputEmail1">Room Name</label>
 								<input type="text" v-model="formItem.name" class="form-control" id="exampleInputname" placeholder="Enter Name">
 							</div>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Course Code</label>
-								<input type="text" v-model="formItem.code" class="form-control" id="exampleInputname" placeholder="Enter  Code">
-							</div>
-							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Course Credit</label>
-								<input type="number" v-model="formItem.credit" class="form-control" id="exampleInputname" placeholder="Enter..">
-							</div>
-							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Course Class Time</label>
-								<input type="number" v-model="formItem.class_time" class="form-control" id="exampleInputname" placeholder="Enter time in hours">
-							</div>
-							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Course Exam Time</label>
-								<input type="number" v-model="formItem.exam_time" class="form-control" id="exampleInputname" placeholder="Enter time in hours">
+								<label class="form-label" for="exampleInputEmail1">Student Capacity</label>
+                                <input type="number" v-model="formItem.total" class="form-control" id="exampleInputname" placeholder="Total Student">
 							</div>
 						</form>
 					</div>
@@ -110,16 +92,18 @@
 				</div>
 			</Modal>
 
-			<Modal :mask-closable="false" :closable="false" v-model="editModal"	title="Edit Course">
+			<Modal :mask-closable="false" :closable="false" v-model="editModal"	title="Edit Room">
 				<div class="card m-b-20">
 					<div class="card-body">
 						<form>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Course Code</label>
-								<input type="text" v-model="edit_form.code" class="form-control" id="exampleInputname" placeholder="Enter  Code">
+								<label class="form-label" for="exampleInputEmail1">Room Department</label>
+                                <Select v-model="edit_form.department"  placeholder="Please select a deparment" filterable>
+                                    <Option v-for="(item,index) in department_data"  :key="index" :value="item.name" >{{item.name}}</Option>
+                                </Select>
 							</div>
 							<div class="form-group">
-								<label class="form-label" for="exampleInputEmail1">Course Name</label>
+								<label class="form-label" for="exampleInputEmail1">Room Name</label>
 								<input type="text" v-model="edit_form.name" class="form-control" id="exampleInputname" placeholder="Enter  Name">
 							</div>
 						</form>
@@ -147,21 +131,16 @@ export default {
 			editModal:false,
 			formItem:{
 				name:'', 
-				code:'', 
-				credit:'', 
-				class_time:'', 
-				exam_time:'', 
+				total:'', 
 			},
 			editIndex:-1,
 			edit_form:{
 				name:'',
 				id:'',
-				code:'',
-				credit:'', 
-				class_time:'', 
-				exam_time:'', 
+				total:'',
 			},
 			categoryData:[],
+			department_data:[],
 			page:1,
 			total:"10",
 			pagination: {},
@@ -177,17 +156,17 @@ export default {
 		//Add
 		async add_category(){
 			if(this.formItem.name.trim()=='') return this.e('Name is required')
-			if(this.formItem.code.trim()=='') return this.e('Code is required')
+			// if(this.formItem.department.trim()=='') return this.e('Department is required')
 			this.loading = true
-        	const res = await this.callApi('post',`app/admin/all_course/add`,this.formItem)
+        	const res = await this.callApi('post',`app/admin/all_rooms/add`,this.formItem)
 			if(res.status==201){
 				this.addModal=false
-				this.s('Course added successfully!')
+				this.s('Room added successfully!')
 				this.categoryData.unshift(res.data)
 				this.loading = false
 				this.formItem={
 					name:'',
-					code:'',
+					total:'',
 				}
 			}
 			else{
@@ -197,14 +176,14 @@ export default {
 		//Edit
 		async edit_category(){
 			if(this.edit_form.name.trim()=='') return this.e('Name is required')
-			if(this.edit_form.code.trim()=='') return this.e('Code is required')
+			if(this.edit_form.department.trim()=='') return this.e('Department is required')
 			this.loading = true
-        	const res = await this.callApi('post', 'app/admin/all_course/edit',this.edit_form)
+        	const res = await this.callApi('post', 'app/admin/all_rooms/edit',this.edit_form)
 			if(res.status==200){
-				this.s('Course updated successfully!')
+				this.s('Room updated successfully!')
 				this.editModal = false
 				this.categoryData[this.editIndex].name = this.edit_form.name
-				this.categoryData[this.editIndex].code = this.edit_form.code
+				this.categoryData[this.editIndex].department = this.edit_form.department
 				this.loading = false
 			}
 			else{
@@ -218,16 +197,16 @@ export default {
 		},
 		//Delete
 		async category_delete(id,index){
-			if(!confirm("Are you sure to delete this Course")){
+			if(!confirm("Are you sure to delete this Room")){
 				return;
 			}
 			let ob = {
 				id:id
 			}
 			this.loading = true
-			const res = await this.callApi('post',`app/admin/all_course/delete`,ob)
+			const res = await this.callApi('post',`app/admin/all_rooms/delete`,ob)
 			if(res.status == 200){
-				this.i(' Course have been successfully Deleted!')
+				this.i(' Room have been successfully Deleted!')
 				this.categoryData.splice(index,1)
 				this.pagination = res.data
 				this.loading = false
@@ -241,14 +220,22 @@ export default {
 
 	async created(){
 	   this.loading = true
-       const res = await this.callApi('get',`app/admin/all_course`)
+       const res = await this.callApi('get',`app/admin/all_rooms`)
 		if(res.status == 200){
 			this.categoryData = res.data
 		}
 		else{
 			this.swr();
 		}
-		this.loading = false
+        this.loading = false
+
+        const res1 = await this.callApi('get',`app/admin/all_department`)
+		if(res1.status == 200){
+			this.department_data = res1.data
+		}
+		else{
+			this.swr();
+		}
 	}, 
 	
 }

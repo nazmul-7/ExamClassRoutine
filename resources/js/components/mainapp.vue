@@ -77,19 +77,24 @@
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Notice  </span>
 						</router-link>
 					</li>
-					<li class="slide">
+					<!-- <li class="slide">
 						<router-link to="/departments" class="side-menu__item" :class=" $route.path == '/departments' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Departments  </span>
 						</router-link>
-					</li>
+					</li> -->
 					<li class="slide">
-						<router-link to="/Sessions" class="side-menu__item" :class=" $route.path == '/Sessions' ?'active': ''">
-								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Sessions  </span>
+						<router-link to="/semester" class="side-menu__item" :class=" $route.path == '/semester' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Semester  </span>
 						</router-link>
 					</li>
 					<li class="slide">
 						<router-link to="/courses" class="side-menu__item" :class=" $route.path == '/courses' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Courses  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/rooms" class="side-menu__item" :class=" $route.path == '/rooms' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Rooms  </span>
 						</router-link>
 					</li>
 					<!-- <li class="slide">
