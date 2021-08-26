@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 25, 2021 at 03:42 PM
+-- Generation Time: Aug 26, 2021 at 05:17 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -56,7 +56,9 @@ INSERT INTO `batches` (`id`, `department`, `name`, `created_at`, `updated_at`) V
 CREATE TABLE `class_routines` (
   `id` int(11) NOT NULL,
   `day` varchar(191) NOT NULL,
-  `time` varchar(191) NOT NULL,
+  `start_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  `hours` int(5) NOT NULL,
   `department_name` varchar(191) NOT NULL,
   `course_name` varchar(191) NOT NULL,
   `semister` varchar(191) DEFAULT NULL,
@@ -71,10 +73,15 @@ CREATE TABLE `class_routines` (
 -- Dumping data for table `class_routines`
 --
 
-INSERT INTO `class_routines` (`id`, `day`, `time`, `department_name`, `course_name`, `semister`, `batch_name`, `teacher_name`, `room`, `created_at`, `updated_at`) VALUES
-(1, 'Saturday', '10:00AM - 11:00AM', 'CSE', 'Eng-1111', 'Spring', '38th (Section D)', 'Mr Abdul', '302', '2021-08-18 14:02:07', '2021-08-18 14:02:07'),
-(3, 'Wednesday', '10:00AM - 11:00AM', 'CSE', 'CSE-1211', 'Spring', '38th-Section C', 't1', '209', '2021-08-18 11:39:35', '2021-08-18 11:39:35'),
-(5, 'Saturday', '43243', 'CSE', 'CSE-1111', '1', '38th-Section B', 'T2@gmail.com', 'fdfd', '2021-08-22 13:03:18', '2021-08-22 13:03:18');
+INSERT INTO `class_routines` (`id`, `day`, `start_time`, `end_time`, `hours`, `department_name`, `course_name`, `semister`, `batch_name`, `teacher_name`, `room`, `created_at`, `updated_at`) VALUES
+(6, 'Sunday', 9, 10, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'MHN', '331', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(7, 'Sunday', 10, 11, 1, 'CSE', 'CSE 133', 'Spring', '2019-20 A', 'EH', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(8, 'Sunday', 11, 12, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'EH', '329', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(9, 'Monday', 8, 9, 1, 'CSE', 'EEE 109D', 'Spring', '2019-20 A', 'EEE', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(10, 'Monday', 9, 10, 1, 'CSE', 'MAT 102D', 'Spring', '2019-20 A', 'MAT', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(11, 'Monday', 10, 1, 3, 'CSE', 'CSE 134 (A)', 'Spring', '2019-20 A', 'EH', '304', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(12, 'Tuesday', 10, 11, 1, 'CSE', 'CSE 133', 'Spring', '2019-20 A', 'EH', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(13, 'Tuesday', 9, 10, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'MHN', '331', '2021-08-22 13:03:18', '2021-08-22 13:03:18');
 
 -- --------------------------------------------------------
 
@@ -253,28 +260,26 @@ INSERT INTO `rooms` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `semesters`
+-- Table structure for table `teacher_courses`
 --
 
-CREATE TABLE `semesters` (
+CREATE TABLE `teacher_courses` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total` int(10) NOT NULL,
+  `teacher_id` int(10) NOT NULL,
+  `course_id` int(10) NOT NULL,
+  `teacher_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `semesters`
+-- Dumping data for table `teacher_courses`
 --
 
-INSERT INTO `semesters` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
-(1, '38th-Section A', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(2, '38th-Section B', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(3, '38th-Section C', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(4, '38th-Section D', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(6, '38th-Section E', 0, '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(8, 'Batch 1', 50, '2021-08-25 13:23:04', '2021-08-25 13:23:04');
+INSERT INTO `teacher_courses` (`id`, `teacher_id`, `course_id`, `teacher_name`, `course_name`, `created_at`, `updated_at`) VALUES
+(2, 29, 4, 'T2@gmail.com', 'CSE-1212', '2021-08-25 14:09:45', '2021-08-25 14:09:45'),
+(3, 27, 2, 't1', 'CSE-1211', '2021-08-25 14:17:40', '2021-08-25 14:17:40');
 
 -- --------------------------------------------------------
 
@@ -397,9 +402,9 @@ ALTER TABLE `rooms`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `semesters`
+-- Indexes for table `teacher_courses`
 --
-ALTER TABLE `semesters`
+ALTER TABLE `teacher_courses`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -428,7 +433,7 @@ ALTER TABLE `batches`
 -- AUTO_INCREMENT for table `class_routines`
 --
 ALTER TABLE `class_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -473,10 +478,10 @@ ALTER TABLE `rooms`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `semesters`
+-- AUTO_INCREMENT for table `teacher_courses`
 --
-ALTER TABLE `semesters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `teacher_courses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `teacher_exam_routines`
