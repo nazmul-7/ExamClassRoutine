@@ -48,7 +48,7 @@
 											<table id="example" class="table card-table table-bordered table-hover table-vcenter " role="grid" aria-describedby="example_info">
 												<thead>
 													<tr role="row">
-														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Day</th>
+														<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Day</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Time</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 60px;">Department</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 250px;">Course</th>
@@ -57,22 +57,52 @@
 														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Semester</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 100px;">Room</th>
 														<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 300px;" v-if="authUser.userType == 'Admin'">Action</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >Day/Time</th> -->
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >Day/Time</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >08:00-09:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >09:00-10:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >10:00-11:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >11:00-12:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >12:00-01:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >01:00-02:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >02:00-03:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >03:00-04:00</th>
+														<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;" >04:00-05:00</th>
 													</tr>
 												</thead>
 												<tbody>												
-													<tr role="row" class="odd" v-for="(item,index) in allItems" :key="index">
-														<td>{{item.day}}</td>
-														<td >{{item.time}}</td>
-														<td >{{item.department_name}}</td>
-														<td >{{item.course_name}}</td>
-														<td >{{item.teacher_name}}</td>
-														<td>{{item.batch_name}}</td>
-														<td>{{item.semister}}</td>
-														<td>{{item.room}}</td>
-														<td v-if="authUser.userType == 'Admin'">
-															<!-- <button class="btn btn-primary" @click="isEditOn(item,index)">Edit</button> -->
+													<tr role="row" class="odd" v-for="(d,i) in days_data" :key="i">
+														<td>{{d}}</td>
+														<template v-if="new_format_routine && new_format_routine[d]" >
+															<td v-for="(t,ix) in times_data" :key="ix" v-if="new_format_routine[d][t] && new_format_routine[d][t][0] && new_format_routine[d][t][0]['col'] != 3" :colspan="new_format_routine[d][t][0]['hours']" style="text-align: center;">
+																<span v-if="new_format_routine[d][t][0]['col'] == 2">
+																	<span>{{new_format_routine[d][t][0].course_name}}</span><br/>
+																	<span>{{new_format_routine[d][t][0].room}}</span><br/>
+																	<span>{{new_format_routine[d][t][0].teacher_name}}</span><br/>
+																</span>
+																<span v-else-if="new_format_routine[d][t][0].col == 4">Break</span>
+																<span v-else></span>
+															</td>
+
+															<!-- <td v-for="(t,ix) in times_data" :key="ix">
+																<span v-if="new_format_routine[d][t].length>0">{{new_format_routine[d][t].batch_name}}</span>
+																<span v-else></span>
+															</td> -->
+														</template>
+														<template v-else>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td style="text-align: center;">Break</td>
+														<td></td>
+														<td></td>
+														<td></td>
+														</template>
+														<!-- <td v-if="authUser.userType == 'Admin'">
                                                             <button class="btn btn-info" @click="product_delete(item.id,index)">Delete</button>
-														</td>
+														</td> -->
 													</tr>
 												</tbody>  
 											</table>
@@ -80,9 +110,9 @@
 									</div>								
 								</div>
 							</div>
-							<div style="text-align:center;" class="pagination_div _mar_t30">
+							<!-- <div style="text-align:center;" class="pagination_div _mar_t30">
 								<Page :current="pagination.current_page" :total="pagination.total" @on-change="getpaginate" :page-size="parseInt(pagination.per_page)" />
-							</div>
+							</div> -->
 						</template>
 						</div>
 					</div>
@@ -179,6 +209,9 @@ export default {
 	data(){
 		return {
 			days:['Saturday','Sunday','Monday',"Tuesday",'Wednesday','Thusday','Friday'],
+			days_data:['Sunday','Monday',"Tuesday",'Wednesday','Thusday'],
+			times_data:[8,9,10,11,12,1,2,3,4,5],
+			new_format_routine:{},
 			course_data:[],
 			batch_data:[],
 			teacher_data:[],
@@ -272,11 +305,13 @@ export default {
 	 
 		async getAllData(){
 			this.loading = true
-			const res = await this.callApi('get',`app/admin/class_routine`)
+			const res = await this.callApi('get',`app/admin/class_routine/session`)
 			if(res.status == 200){
-				this.allItems = res.data.data
-				delete res.data.data
-				this.pagination = res.data
+				this.new_format_routine = res.data.data
+				this.days_data = res.data.days_data
+				this.times_data = res.data.times_data
+				// delete res.data.data
+				// this.pagination = res.data
 			}
 			else{
 				this.swr();

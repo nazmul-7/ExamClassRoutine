@@ -108,6 +108,65 @@ class HomeController extends Controller
         $query =  ClassRoutine::orderBy('id', 'asc');
         return $query->paginate(10);
     }
+    public function admin_class_routineBySession(Request $request){
+        $query =  ClassRoutine::orderBy('id', 'asc')->get();
+        $query->sortBy('start_time');
+        $newQuery = $query->groupBy('day');
+        $days_data = ['Sunday','Monday',"Tuesday",'Wednesday','Thusday'];
+        $times_data = [8,9,10,11,12,1,2,3,4];
+
+        foreach ($newQuery as $key => $value) {
+            $newQuery[$key] =  $value->groupBy('start_time');
+        }
+        foreach ($days_data as $v) {
+            if(isset($newQuery[$v])){
+                $col = 1;
+                foreach ($times_data as  $t) {
+                    if($t == 1){
+                        $newQuery[$v][$t] = [
+                            [
+                                'col'=>4
+                            ]
+                        ];
+                    }
+                    else if(isset($newQuery[$v][$t]) == false){
+                        $col--;
+                        $colVal = $col <=0 ? 1 : 3;
+                        
+                        $newQuery[$v][$t] = [
+                            [
+                                'col'=>$colVal,
+                                'hours'=>1
+                            ]
+                        ];
+                        // \Log::info("$v-$t-($col)-if");
+                    }
+                    else {
+                        $col = $newQuery[$v][$t][0]['hours'];
+                        $newQuery[$v][$t][0]['col'] = 2;
+                        // \Log::info("$v-$t-($col)-".$newQuery[$v][$t][0]['hours']."-else ");
+                    }
+
+
+
+                }
+                
+
+            }
+            else {
+                $newQuery[$v] = null;
+            }
+        }
+        // for($i=0;$i<sizeof($days_data);$i++){
+        //     if(isset)
+        // }
+
+        return response()->json([
+            'data' => $newQuery,
+            'days_data' => $days_data,
+            'times_data' => $times_data,
+        ], 200); 
+    }
     public function admin_class_routine_store(Request $request){
         $data = $request->all();
         return  ClassRoutine::create($data);
