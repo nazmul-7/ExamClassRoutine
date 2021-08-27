@@ -35,17 +35,17 @@
 													<thead>
 														<tr role="row">
 															<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">No</th> -->
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Day</th>
-															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Choose</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Class Start Time</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Class End Time</th>
 															<!-- <th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Image</th> -->
 															<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 101px;">Action</th> -->
 														</tr> 
 													</thead>
 													<tbody>												
-														<tr role="row" class="odd" v-for="(item,index) in daysOb" :key="index">
+														<tr role="row" class="odd" >
 															<!-- <td>{{index+1}}</td> -->
-															<td>{{item.day}}</td>
-															<td> <Checkbox v-model="item.isSelected"></Checkbox></td>
+															<td> <TimePicker  :steps="[1]" type="time" placeholder="Select Start time" style="width: 168px"></TimePicker></td>
+															<td>  <TimePicker :steps="[1]" type="time" placeholder="Select End time" style="width: 168px"></TimePicker></td>
 															<!-- <td class="category_img"><img :src="item.image" alt=""></td> -->
 														
 														</tr>
@@ -150,7 +150,10 @@ export default {
 				semester_id:'', 
 				course_id:'', 
 			},
-			categoryData:[],
+			categoryData:{
+                start_time:'',
+                end_time:'',
+            },
 			department_data:[],
 			semester_data:[],
 			course_data:[],
@@ -181,7 +184,7 @@ export default {
             }
             
 			this.loading = true
-        	const res = await this.callApi('post',`app/admin/admin_class_days/add`,{data:newDeptDays})
+        	const res = await this.callApi('post',`app/admin/admin_class_times/add`,{data:newDeptDays})
 			if(res.status==200){
 				this.addModal=false
 				this.s('Class Days Updated successfully!')
@@ -201,7 +204,7 @@ export default {
 			if(this.edit_form.name.trim()=='') return this.e('Name is required')
 			if(this.edit_form.department.trim()=='') return this.e('Department is required')
 			this.loading = true
-        	const res = await this.callApi('post', 'app/admin/admin_class_days/edit',this.edit_form)
+        	const res = await this.callApi('post', 'app/admin/admin_class_times/edit',this.edit_form)
 			if(res.status==200){
 				this.s('Semester Courses updated successfully!')
 				this.editModal = false
@@ -227,7 +230,7 @@ export default {
 				id:id
 			}
 			this.loading = true
-			const res = await this.callApi('post',`app/admin/admin_class_days/delete`,ob)
+			const res = await this.callApi('post',`app/admin/admin_class_times/delete`,ob)
 			if(res.status == 200){
 				this.i(' Semester Courses have been successfully Deleted!')
 				this.categoryData.splice(index,1)
@@ -243,7 +246,7 @@ export default {
 
 	async created(){
 	   this.loading = true
-       const res = await this.callApi('get',`app/admin/admin_class_days`)
+       const res = await this.callApi('get',`app/admin/admin_class_times`)
 		if(res.status == 200){
 			this.categoryData = res.data
 		}
@@ -251,19 +254,7 @@ export default {
 			this.swr();
         }
 
-        for(let d of this.days){
-            let ob = {
-                'day':d,
-                'isSelected':false
-            }
-            for(let t of this.categoryData){
-                if( d == t.day ){
-                    ob.isSelected = true;
-                    break;
-                }
-            }
-            this.daysOb.push(ob)
-        }
+        
         
 
         this.loading = false

@@ -18,6 +18,7 @@ import teacher_notice from './admin/pages/teacher_notice'
 import teacher from './admin/pages/teacher'
 import student from './admin/pages/student'
 import admin_class_routine from './admin/pages/admin_class_routine'
+import admin_class_times from './admin/pages/admin_class_times'
 import admin_class_days from './admin/pages/admin_class_days'
 import teacher_class_routine from './admin/pages/teacher_class_routine'
 import admin_teacher_courses from './admin/pages/admin_teacher_courses'
@@ -69,6 +70,11 @@ const routes = [
         path: '/admin_class_days', 
         component: admin_class_days, 
         name: 'admin_class_days'
+    },
+    {
+        path: '/admin_class_times', 
+        component: admin_class_times, 
+        name: 'admin_class_times'
     },
     {
         path: '/student_class_routine', 

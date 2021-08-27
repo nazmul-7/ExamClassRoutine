@@ -185,7 +185,7 @@ export default {
 			if(res.status==200){
 				this.addModal=false
 				this.s('Class Days Updated successfully!')
-				this.categoryData.unshift(res.data)
+				// this.categoryData.unshift(res.data)
 				this.loading = false
 				this.formItem={
 					name:'',
