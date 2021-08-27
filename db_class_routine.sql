@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 26, 2021 at 05:17 PM
+-- Generation Time: Aug 27, 2021 at 03:07 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -134,6 +134,53 @@ INSERT INTO `departments` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dept_class_days`
+--
+
+CREATE TABLE `dept_class_days` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `day` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dept_class_days`
+--
+
+INSERT INTO `dept_class_days` (`id`, `name`, `day`, `created_at`, `updated_at`) VALUES
+(20, 'CSE', 'Sunday', NULL, NULL),
+(21, 'CSE', 'Monday', NULL, NULL),
+(22, 'CSE', 'Tuesday', NULL, NULL),
+(23, 'CSE', 'Wednesday', NULL, NULL),
+(24, 'CSE', 'Thusday', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dept_class_times`
+--
+
+CREATE TABLE `dept_class_times` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dept_class_times`
+--
+
+INSERT INTO `dept_class_times` (`id`, `name`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
+(1, 'CSE', '08:00:00', '17:00:00', '2021-08-27 19:04:28', '2021-08-27 19:04:28');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `exam_routines`
 --
 
@@ -238,10 +285,10 @@ INSERT INTO `password_resets` (`id`, `email`, `token`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rooms`
+-- Table structure for table `semesters`
 --
 
-CREATE TABLE `rooms` (
+CREATE TABLE `semesters` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total` int(10) NOT NULL,
@@ -250,12 +297,37 @@ CREATE TABLE `rooms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `rooms`
+-- Dumping data for table `semesters`
 --
 
-INSERT INTO `rooms` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
+INSERT INTO `semesters` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
 (9, '200', 30, '2021-08-25 13:33:15', '2021-08-25 13:33:15'),
 (10, '201', 50, '2021-08-25 13:33:26', '2021-08-25 13:33:26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `semester_courses`
+--
+
+CREATE TABLE `semester_courses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `semester_id` int(10) NOT NULL,
+  `course_id` int(10) NOT NULL,
+  `semester_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `semester_courses`
+--
+
+INSERT INTO `semester_courses` (`id`, `semester_id`, `course_id`, `semester_name`, `course_name`, `created_at`, `updated_at`) VALUES
+(2, 29, 4, 'T2@gmail.com', 'CSE-1212', '2021-08-25 14:09:45', '2021-08-25 14:09:45'),
+(3, 27, 2, 't1', 'CSE-1211', '2021-08-25 14:17:40', '2021-08-25 14:17:40'),
+(4, 9, 2, '200', 'CSE-1211', '2021-08-27 12:25:29', '2021-08-27 12:25:29');
 
 -- --------------------------------------------------------
 
@@ -372,6 +444,18 @@ ALTER TABLE `departments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dept_class_days`
+--
+ALTER TABLE `dept_class_days`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dept_class_times`
+--
+ALTER TABLE `dept_class_times`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `exam_routines`
 --
 ALTER TABLE `exam_routines`
@@ -396,9 +480,15 @@ ALTER TABLE `password_resets`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rooms`
+-- Indexes for table `semesters`
 --
-ALTER TABLE `rooms`
+ALTER TABLE `semesters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `semester_courses`
+--
+ALTER TABLE `semester_courses`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -448,6 +538,18 @@ ALTER TABLE `departments`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `dept_class_days`
+--
+ALTER TABLE `dept_class_days`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `dept_class_times`
+--
+ALTER TABLE `dept_class_times`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `exam_routines`
 --
 ALTER TABLE `exam_routines`
@@ -472,10 +574,16 @@ ALTER TABLE `password_resets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `rooms`
+-- AUTO_INCREMENT for table `semesters`
 --
-ALTER TABLE `rooms`
+ALTER TABLE `semesters`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `semester_courses`
+--
+ALTER TABLE `semester_courses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `teacher_courses`

@@ -18,8 +18,10 @@ import teacher_notice from './admin/pages/teacher_notice'
 import teacher from './admin/pages/teacher'
 import student from './admin/pages/student'
 import admin_class_routine from './admin/pages/admin_class_routine'
+import admin_class_days from './admin/pages/admin_class_days'
 import teacher_class_routine from './admin/pages/teacher_class_routine'
 import admin_teacher_courses from './admin/pages/admin_teacher_courses'
+import admin_semester_courses from './admin/pages/admin_semester_courses'
 import student_class_routine from './admin/pages/student_class_routine'
 import admin_exam_routine from './admin/pages/admin_exam_routine'
 import student_exam_routine from './admin/pages/student_exam_routine'
@@ -64,6 +66,11 @@ const routes = [
         name: 'admin_class_routine'
     },
     {
+        path: '/admin_class_days', 
+        component: admin_class_days, 
+        name: 'admin_class_days'
+    },
+    {
         path: '/student_class_routine', 
         component: student_class_routine, 
         name: 'student_class_routine'
@@ -77,6 +84,11 @@ const routes = [
         path: '/admin_teacher_courses', 
         component: admin_teacher_courses, 
         name: 'admin_teacher_courses'
+    },
+    {
+        path: '/admin_semester_courses', 
+        component: admin_semester_courses, 
+        name: 'admin_semester_courses'
     },
     {
         path: '/teacher_notice', 

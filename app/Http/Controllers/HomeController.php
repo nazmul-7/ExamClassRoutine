@@ -12,7 +12,10 @@ use App\Semester;
 use App\Department;
 use App\ExamRoutine;
 use App\ClassRoutine;
+use App\DeptClassDay;
+use App\DeptClassTime;
 use App\TeacherCourse;
+use App\SemesterCourse;
 use App\TeacherExamRoutine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -332,5 +335,39 @@ class HomeController extends Controller
     }
     public function all_teacher_course_delete(Request $request){
         return  TeacherCourse::where('id', $request->id)->delete();
+    }
+
+
+    public function all_semester_courses(Request $request){
+        return  SemesterCourse::all();
+    }
+    public function all_semester_courses_add(Request $request){
+        $data = $request->all();
+        return  SemesterCourse::create($data);
+    }
+    public function all_semester_courses_edit(Request $request){
+        $data = $request->all();
+        return  SemesterCourse::where('id',$data['id'])->update($data);
+    }
+    public function all_semester_courses_delete(Request $request){
+        return  SemesterCourse::where('id', $request->id)->delete();
+    }
+
+
+    public function admin_class_days(Request $request){
+        return  DeptClassDay::all();
+    }
+    public function admin_class_days_add(Request $request){
+        $data = $request->all();
+        DeptClassDay::where('name','CSE')->delete();
+        return  DeptClassDay::insert($data['data']);
+    }
+
+    public function admin_class_times(Request $request){
+        return  DeptClassTime::where('id',1)->first();
+    }
+    public function admin_class_times_edit(Request $request){
+        $data = $request->all();
+        return  DeptClassTime::where('id',1)->update($data);
     }
 }

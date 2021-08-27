@@ -98,8 +98,18 @@
 						</router-link>
 					</li>
 					<li class="slide">
+						<router-link to="/admin_semester_courses" class="side-menu__item" :class=" $route.path == '/admin_semester_courses' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Semester Courses  </span>
+						</router-link>
+					</li>
+					<li class="slide">
 						<router-link to="/rooms" class="side-menu__item" :class=" $route.path == '/rooms' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">All Rooms  </span>
+						</router-link>
+					</li>
+					<li class="slide">
+						<router-link to="/admin_class_days" class="side-menu__item" :class=" $route.path == '/admin_class_days' ?'active': ''">
+								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Class Days </span>
 						</router-link>
 					</li>
 					<!-- <li class="slide">

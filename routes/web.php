@@ -101,11 +101,26 @@ Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
     Route::post('/admin/all_rooms/add', 'HomeController@all_rooms_add');
     Route::post('/admin/all_rooms/edit', 'HomeController@all_rooms_edit');
     Route::post('/admin/all_rooms/delete', 'HomeController@all_rooms_delete');
-    // Rooms
+
+    // Teacher Courses
     Route::get('/admin/all_teacher_course', 'HomeController@all_teacher_course');
     Route::post('/admin/all_teacher_course/add', 'HomeController@all_teacher_course_add');
     Route::post('/admin/all_teacher_course/edit', 'HomeController@all_teacher_course_edit');
     Route::post('/admin/all_teacher_course/delete', 'HomeController@all_teacher_course_delete');
+
+    // Semester Courses
+    Route::get('/admin/all_semester_courses', 'HomeController@all_semester_courses');
+    Route::post('/admin/all_semester_courses/add', 'HomeController@all_semester_courses_add');
+    Route::post('/admin/all_semester_courses/edit', 'HomeController@all_semester_courses_edit');
+    Route::post('/admin/all_semester_courses/delete', 'HomeController@all_semester_courses_delete');
+
+    // Class days
+    Route::get('/admin/admin_class_days', 'HomeController@admin_class_days');
+    Route::post('/admin/admin_class_days/add', 'HomeController@admin_class_days_add');
+
+    // Class Times
+    Route::get('/admin/admin_class_times', 'HomeController@admin_class_times');
+    Route::post('/admin/admin_class_times/edit', 'HomeController@admin_class_times_edit');
 
 
 
