@@ -9,7 +9,7 @@
 					<div class="col-md-12 col-lg-12">
 						<div class="card">
 							<div class="card-header card_header_area">
-								<div class="card-title">Class Days Data</div>
+								<div class="card-title">Class Times Data</div>
 								<!-- <div class="card_add_data btn btn-primary" @click="addModal = true">
 									Add Semester Courses
 								</div> -->
@@ -44,9 +44,12 @@
 													<tbody>												
 														<tr role="row" class="odd" >
 															<!-- <td>{{index+1}}</td> -->
-															<td> <TimePicker  :steps="[1]" type="time" placeholder="Select Start time" style="width: 168px"></TimePicker></td>
-															<td>  <TimePicker :steps="[1]" type="time" placeholder="Select End time" style="width: 168px"></TimePicker></td>
-															<!-- <td class="category_img"><img :src="item.image" alt=""></td> -->
+															<td> 
+                                                                <input class="form-control" id="exampleInputname" type="time" step="60" v-model="categoryData.start_time" name="appt" min="08:00" max="20:00">
+                                                            </td>
+															<td> 
+                                                                <input class="form-control" id="exampleInputname" type="time" v-model="categoryData.end_time" name="appt" min="08:00" max="20:00">
+                                                            </td>
 														
 														</tr>
 													</tbody>
@@ -62,7 +65,7 @@
 							</div>
                             <div class="card-header card_header_area">
 								<!-- <div class="card-title">Semester Courses Data</div> -->
-								<div class="card_add_data btn btn-primary" @click="add_category">
+								<div class="card_add_data btn btn-primary" @click="edit_category">
 									Update
 								</div>
 							</div>
@@ -201,15 +204,11 @@ export default {
 		},
 		//Edit
 		async edit_category(){
-			if(this.edit_form.name.trim()=='') return this.e('Name is required')
-			if(this.edit_form.department.trim()=='') return this.e('Department is required')
 			this.loading = true
-        	const res = await this.callApi('post', 'app/admin/admin_class_times/edit',this.edit_form)
+        	const res = await this.callApi('post', 'app/admin/admin_class_times/edit',this.categoryData)
 			if(res.status==200){
-				this.s('Semester Courses updated successfully!')
+				this.s('Class time updated successfully!')
 				this.editModal = false
-				this.categoryData[this.editIndex].name = this.edit_form.name
-				this.categoryData[this.editIndex].department = this.edit_form.department
 				this.loading = false
 			}
 			else{

@@ -112,11 +112,11 @@
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Class Days </span>
 						</router-link>
 					</li>
-					<!-- <li class="slide">
+					<li class="slide">
 						<router-link to="/admin_class_times" class="side-menu__item" :class=" $route.path == '/admin_class_times' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Class Times </span>
 						</router-link>
-					</li> -->
+					</li>
 					<!-- <li class="slide">
 						<router-link to="/users" class="side-menu__item" :class=" $route.path == '/users' ?'active': ''">
 								<i class="side-menu__icon fa fa-database"></i><span class="side-menu__label">Users  </span>

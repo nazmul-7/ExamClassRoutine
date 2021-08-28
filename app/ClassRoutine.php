@@ -8,7 +8,8 @@ class ClassRoutine extends Model
 {
     protected $fillable = [
         'day',
-        'time',
+        'start_time',
+        'end_time',
         'department_name',
         'teacher_name',
         'batch_name',

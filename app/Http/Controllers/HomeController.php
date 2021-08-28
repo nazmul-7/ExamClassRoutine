@@ -225,7 +225,7 @@ class HomeController extends Controller
         return $query->paginate(10);
     }
     public function all_teachers(Request $request){
-        return  User::where('userType', "Teacher")->get();
+        return  User::with('courses')->where('userType', "Teacher")->get();
     }
 
 
@@ -339,7 +339,7 @@ class HomeController extends Controller
 
 
     public function all_semester_courses(Request $request){
-        return  SemesterCourse::all();
+        return  SemesterCourse::with('course')->get();
     }
     public function all_semester_courses_add(Request $request){
         $data = $request->all();

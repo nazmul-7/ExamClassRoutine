@@ -37,6 +37,8 @@
 															<!-- <th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 95px;">No</th> -->
 															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Semester Name</th>
 															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Course Name</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Teacher Name</th>
+															<th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Room</th>
 															<!-- <th class="wd-20p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 170px;">Image</th> -->
 															<th class="wd-15p sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 101px;">Action</th>
 														</tr> 
@@ -46,6 +48,8 @@
 															<!-- <td>{{index+1}}</td> -->
 															<td>{{item.semester_name}}</td>
 															<td>{{item.course_name}}</td>
+															<td>{{item.teacher_name}}</td>
+															<td>{{item.room_name}}</td>
 															<!-- <td class="category_img"><img :src="item.image" alt=""></td> -->
 															<td>
 																<!-- <button class="btn btn-gray" @click="viewImage(item,index)">View Image</button> -->
@@ -84,6 +88,18 @@
 								<label class="form-label" for="exampleInputEmail1">Course Name</label>
                                  <Select v-model="formItem.course_id"  placeholder="Please select a course" filterable>
                                     <Option v-for="(item,index) in course_data"  :key="index" :value="item.id" >{{item.name}}</Option>
+                                </Select>
+							</div>
+							<div class="form-group">
+								<label class="form-label" for="exampleInputEmail1">Teacher Name</label>
+                                 <Select v-model="formItem.teacher_id"  placeholder="Please select a course" filterable>
+                                    <Option v-for="(item,index) in filter_teacher"  :key="index" :value="item.id" >{{item.name}}</Option>
+                                </Select>
+							</div>
+							<div class="form-group">
+								<label class="form-label" for="exampleInputEmail1">Room</label>
+                                 <Select v-model="formItem.room_id"  placeholder="Please select a course" filterable>
+                                    <Option v-for="(item,index) in filter_room"  :key="index" :value="item.id" >{{item.name}}</Option>
                                 </Select>
 							</div>
 						</form>
@@ -136,8 +152,12 @@ export default {
 			formItem:{
 				semester_name:'', 
 				course_name:'', 
+				teacher_name:'', 
+				room_name:'', 
 				semester_id:'', 
 				course_id:'', 
+				teacher_id:'', 
+				room_id:'', 
 			},
 			editIndex:-1,
 			edit_form:{
@@ -150,6 +170,8 @@ export default {
 			department_data:[],
 			semester_data:[],
 			course_data:[],
+			teacher_data:[],
+			room_data:[],
 			page:1,
 			total:"10",
 			pagination: {},
@@ -159,6 +181,42 @@ export default {
 
 		}
 	},
+	computed:{
+      filter_teacher(){
+        let arr = [];
+        if(this.formItem.course_id){
+            for(let d of this.teacher_data){
+				if(d.courses.length > 0){
+					for(let c of d.courses){
+						if (c.course_id == this.formItem.course_id){
+							arr.push(d)
+							break
+						}
+					}
+				}
+            }
+        }
+        else arr = this.teacher_data
+
+        return arr
+      },
+      filter_room(){
+        let arr = [];
+        if(this.formItem.semester_id){
+			let index = this.semester_data.findIndex(d=>d.id == this.formItem.semester_id);
+
+            for(let d of this.room_data){
+				
+				if (d.total  >= this.semester_data[index].total){
+					arr.push(d)
+				}
+            }
+        }
+        else arr = this.room_data
+
+        return arr
+      }  
+    },
 
 	methods : {
     
@@ -166,10 +224,16 @@ export default {
 		async add_category(){
 			if(this.formItem.semester_id =='') return this.e('Semester name is required')
             if(this.formItem.course_id =='') return this.e('Course name is required')
+            if(this.formItem.teacher_id =='') return this.e('Teacher name is required')
+            if(this.formItem.room_id =='') return this.e('Room is required')
             let tIndex = this.semester_data.findIndex(d=>d.id == this.formItem.semester_id)
             let cIndex = this.course_data.findIndex(d=>d.id == this.formItem.course_id)
+            let rIndex = this.room_data.findIndex(d=>d.id == this.formItem.room_id)
+            let tcIndex = this.teacher_data.findIndex(d=>d.id == this.formItem.teacher_id)
             this.formItem.semester_name = this.semester_data[tIndex].name
             this.formItem.course_name = this.course_data[cIndex].name
+            this.formItem.room_name = this.room_data[rIndex].name
+            this.formItem.teacher_name = this.teacher_data[tcIndex].name
 			// if(this.formItem.department.trim()=='') return this.e('Department is required')
 			this.loading = true
         	const res = await this.callApi('post',`app/admin/all_semester_courses/add`,this.formItem)
@@ -179,8 +243,14 @@ export default {
 				this.categoryData.unshift(res.data)
 				this.loading = false
 				this.formItem={
-					name:'',
-					total:'',
+					semester_name:'', 
+					course_name:'', 
+					teacher_name:'', 
+					room_name:'', 
+					semester_id:'', 
+					course_id:'', 
+					teacher_id:'', 
+					room_id:'', 
 				}
 			}
 			else{
@@ -243,13 +313,17 @@ export default {
 		}
         this.loading = false
 
-        const [course,teacher,department,batch] = await Promise.all([
+        const [course,batch,teacher,room] = await Promise.all([
             this.callApi('get','app/admin/all_course'),
             this.callApi('get','app/admin/all_semester'),
+            this.callApi('get','app/admin/all_teachers'),
+            this.callApi('get','app/admin/all_rooms'),
 		]);
 		if(course.status == 200 && teacher.status == 200 ){
 			this.course_data = course.data;
-			this.semester_data = teacher.data;
+			this.semester_data = batch.data;
+			this.teacher_data = teacher.data;
+			this.room_data = room.data;
 		}
 	}, 
 	

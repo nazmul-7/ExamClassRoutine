@@ -128,68 +128,52 @@
 			<div class="card m-b-20">
 				<div class="card-body">
 						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="form-label" >Department</label>
-									<Select v-model="formItem.department_name"  placeholder="Please select a deparment" filterable>
-										<Option v-for="(item,index) in department_data"  :key="index" :value="item.name" >{{item.name}}</Option>
-									</Select>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="form-label" >Session</label>
-									<Select v-model="formItem.batch_name"  placeholder="Please select a Semester" filterable>
-										<Option v-for="(item,index) in batchByDept"  :key="index" :value="item.name" >{{item.name}}</Option>
-									</Select>
-								</div>
-							</div>
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<div class="form-group">
 									<label class="form-label" >Semester</label>
-									<input type="text"  class="form-control" v-model="formItem.semister"  placeholder="Semester">
-									<!-- <Select v-model="formItem.semister"  placeholder="Please select a course">
-										<Option value="Spring" >Spring</Option>
-										<Option value="Summer" >Summer</Option>
-									</Select> -->
+									<Select v-model="semester_id"  placeholder="Please select a Semester" filterable>
+										<Option v-for="(item,index) in semester_data"  :key="index" :value="item.id" >{{item.name}}</Option>
+									</Select>
 								</div>
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-6" v-if="semester_id">
+								<div class="form-group">
+									<label class="form-label" >Course</label>
+									<Select v-model="semesterCourseId"  placeholder="Please select a course" filterable @on-change="changeCourse">
+										<Option v-for="(item,index) in filter_course"  :key="index" :value="item.id" >{{item.course_name}}</Option>
+									</Select>
+								</div>
+							</div>
+							<div class="col-md-6" v-if="semesterCourseId">
+								<div class="form-group">
+									<label class="form-label" >Teacher</label>
+									<input type="text" class="form-control" disabled  v-model="formItem.teacher_name"  placeholder="Teacher Name">
+								</div>
+							</div>
+							<div class="col-md-6" v-if="semesterCourseId">
+								<div class="form-group">
+									<label class="form-label" >Room Number</label>
+									<input type="text" class="form-control" disabled  v-model="formItem.room"  placeholder="Room">
+								</div>
+							</div>
+								<div class="col-md-12" v-if="semesterCourseId">
 								<div class="form-group">
 									<label class="form-label" >Day</label>
 									<Select v-model="formItem.day"  placeholder="Please select a day" filterable>
-                                        <Option v-for="(item,index) in days"  :key="index" :value="item" >{{item}}</Option>
+                                        <Option v-for="(item,index) in days_data_item"  :key="index" :value="item.day" >{{item.day}}</Option>
                                     </Select>
 								</div>
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-6" v-if="semesterCourseId">
 								<div class="form-group">
-									<label class="form-label" >Time</label>
-									<input type="text"  class="form-control" v-model="formItem.time"  placeholder="Time Range">
+									<label class="form-label" >Start Time</label>
+									<input class="form-control" id="exampleInputname" type="time" step="60" v-model="formItem.start_time" name="appt" min="08:00" max="20:00" @change="startTimeChanged">
 								</div>
 							</div>
-							
-							<div class="col-md-12">
+							<div class="col-md-6" v-if="semesterCourseId">
 								<div class="form-group">
-									<label class="form-label" >Course</label>
-									<Select v-model="formItem.course_name"  placeholder="Please select a course" filterable>
-										<Option v-for="(item,index) in course_data"  :key="index" :value="item.name" >{{item.name}}</Option>
-									</Select>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="form-label" >Teacher</label>
-									<Select v-model="formItem.teacher_name"  placeholder="Please select a teacher" filterable>
-										<Option v-for="(item,index) in teacher_data"  :key="index" :value="item.name" >{{item.name}}</Option>
-									</Select>
-								</div>
-							</div>
-						
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="form-label" >Room Number</label>
-									<input type="text" class="form-control" v-model="formItem.room"  placeholder="Room number">
+									<label class="form-label" >End Time</label>
+									<input class="form-control" id="exampleInputname" type="time" disabled step="60" v-model="formItem.end_time" name="appt" min="08:00" max="20:00">
 								</div>
 							</div>
 						</div>
@@ -210,16 +194,21 @@ export default {
 		return {
 			days:['Saturday','Sunday','Monday',"Tuesday",'Wednesday','Thusday','Friday'],
 			days_data:['Sunday','Monday',"Tuesday",'Wednesday','Thusday'],
+			days_data_item:[],
 			times_data:[8,9,10,11,12,1,2,3,4,5],
+			semester_id:'',
+			semesterCourseId:'',
 			new_format_routine:{},
 			course_data:[],
+			semester_data:[],
 			batch_data:[],
 			teacher_data:[],
 			department_data:[],
 			addModal:false,
 			formItem:{
 				day:'',
-				time:'',
+				start_time:'',
+				end_time:'',
 				department_name:'',
 				teacher_name:'',
 				batch_name:'',
@@ -234,21 +223,39 @@ export default {
 		}
 	},
 	computed:{
-      batchByDept(){
-          let arr = [];
-        if(this.formItem.department_name){
-            for(let d of this.batch_data){
-                if(d.department == this.formItem.department_name){
+      filter_course(){
+        let arr = [];
+        if(this.semester_id){
+            for(let d of this.course_data){
+                if(d.semester_id == this.semester_id){
                     arr.push(d)
                 }
             }
         }
-        else arr = this.batch_data
+        else arr = this.course_data
 
         return arr
       }  
     },
 	methods : {
+		changeCourse(id){
+			let index = this.course_data.findIndex(d=>d.id == id);
+			this.formItem.teacher_name = this.course_data[index].teacher_name
+			this.formItem.room = this.course_data[index].room_name
+			this.formItem.course_name = this.course_data[index].course_name
+			
+		},
+		startTimeChanged(value){
+			console.log("value")
+			let index = this.course_data.findIndex(d=>d.id == this.semesterCourseId);
+			var datetime = new Date(`2018-07-25 ${this.formItem.start_time}:00`);
+
+			datetime.setHours(datetime.getHours()+ parseInt(this.course_data[index].course.class_time)); 
+			var hour = datetime.getHours();
+			if(hour < 10) hour = `0${hour}`
+			this.formItem.end_time = `${hour}:00`
+			// console.log(this.formItem.start_time)
+		},
 		async getpaginate(page = 1){
 			const res  = await this.callApi('get',`app/admin/class_routine?page=${page}`)
 			if(res.status == 200){
@@ -260,19 +267,30 @@ export default {
 			}
 		},
 		async addItem(){
-			if(this.formItem.day.trim()=='') return this.i('Day is required')
-			if(this.formItem.time.trim()=='') return this.i('Time is required')
-			if(this.formItem.department_name.trim() =='') return this.i('Department is required')
-			if(this.formItem.batch_name.trim()=='') return this.i('Batch is required')
+			if(this.semester_id=='') return this.i('Semester is required')
+			if(this.semesterCourseId=='') return this.i('Semester Course is required')
+			if(this.formItem.day=='') return this.i('Day is required')
+			if(this.formItem.start_time=='') return this.i('Time is required')
+			// if(this.formItem.department_name.trim() =='') return this.i('Department is required')
+			// if(this.formItem.batch_name.trim()=='') return this.i('Batch is required')
 			// if(this.formItem.semister.trim()=='') return this.i('Semester is required')
-			if(this.formItem.course_name.trim() =='') return this.i('Course is required')
-			if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
-			if(this.formItem.room.trim()=='') return this.i('room is required')
+			// if(this.formItem.course_name.trim() =='') return this.i('Course is required')
+			// if(this.formItem.teacher_name.trim() =='') return this.i('Teacher is required')
+			// if(this.formItem.room.trim()=='') return this.i('room is required')
+			var ss = new Date(`2018-07-25 ${this.formItem.start_time}:00`);
+			var sd = new Date(`2018-07-25 ${this.formItem.end_time}:00`);
+			this.formItem.start_time = ss.getHours();
+			this.formItem.end_time = sd.getHours();
+			let ii = this.semester_data.findIndex(d=>d.id == this.semester_id)
+			this.formItem.batch_name = this.semester_data[ii].name
+
+
 
 			this.loading = true
         	let res = await this.callApi('post',`app/admin/class_routine/store`,this.formItem)
 			if(res.status==200 || res.status == 201){
 				this.s('Routine added successfully!')
+				location.reload()
 				this.allItems.unshift(res.data);
 				this.addModal=false
 				this.pagesList = []
@@ -325,17 +343,24 @@ export default {
 	  	await this.getAllData() 
 		this.loading = false
 
-		const [course,teacher,department,batch] = await Promise.all([
-			this.callApi('get','app/admin/all_course'),
+		const [course,teacher,department,batch,days] = await Promise.all([
+			this.callApi('get','app/admin/all_semester_courses'),
 			this.callApi('get','app/admin/all_teachers'),
 			this.callApi('get','app/admin/all_department'),
-			this.callApi('get','app/admin/all_batch'),
+			this.callApi('get','app/admin/all_semester'),
+			this.callApi('get','app/admin/admin_class_days'),
 		]);
 		if(course.status == 200 && teacher.status == 200 && department.status == 200 &&  batch.status == 200){
 			this.course_data = course.data;
 			this.teacher_data = teacher.data;
-			this.batch_data = batch.data;
+			this.semester_data = batch.data;
 			this.department_data = department.data;
+			this.days_data_item = days.data;
+			
+		}
+		this.days_data = []
+		for(let d of this.days_data_item){
+			this.days_data.push(d.day)
 		}
 	}, 
 	
