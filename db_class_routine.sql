@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 27, 2021 at 03:07 PM
+-- Generation Time: Aug 28, 2021 at 04:44 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -59,7 +59,7 @@ CREATE TABLE `class_routines` (
   `start_time` int(11) NOT NULL,
   `end_time` int(11) NOT NULL,
   `hours` int(5) NOT NULL,
-  `department_name` varchar(191) NOT NULL,
+  `department_name` varchar(191) DEFAULT NULL,
   `course_name` varchar(191) NOT NULL,
   `semister` varchar(191) DEFAULT NULL,
   `batch_name` varchar(191) NOT NULL,
@@ -81,7 +81,8 @@ INSERT INTO `class_routines` (`id`, `day`, `start_time`, `end_time`, `hours`, `d
 (10, 'Monday', 9, 10, 1, 'CSE', 'MAT 102D', 'Spring', '2019-20 A', 'MAT', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
 (11, 'Monday', 10, 1, 3, 'CSE', 'CSE 134 (A)', 'Spring', '2019-20 A', 'EH', '304', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
 (12, 'Tuesday', 10, 11, 1, 'CSE', 'CSE 133', 'Spring', '2019-20 A', 'EH', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(13, 'Tuesday', 9, 10, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'MHN', '331', '2021-08-22 13:03:18', '2021-08-22 13:03:18');
+(13, 'Tuesday', 9, 10, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'MHN', '331', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
+(14, 'Sunday', 8, 9, 0, 'CSE', 'CSE-1211', NULL, '201', 't1', '201', '2021-08-28 08:41:28', '2021-08-28 08:41:28');
 
 -- --------------------------------------------------------
 
@@ -105,8 +106,8 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `code`, `name`, `credit`, `class_time`, `exam_time`, `created_at`, `updated_at`) VALUES
-(2, '', 'CSE-1211', 0, 0, 0, NULL, NULL),
-(4, '', 'CSE-1212', 0, 0, 0, NULL, NULL),
+(2, '', 'CSE-1211', 3, 1, 1, NULL, NULL),
+(4, '', 'CSE-1212', 3, 1, 1, NULL, NULL),
 (5, 'CSE-3011', 'Data Structure', 3, 3, 2, '2021-08-25 13:40:19', '2021-08-25 13:40:19');
 
 -- --------------------------------------------------------
@@ -285,6 +286,28 @@ INSERT INTO `password_resets` (`id`, `email`, `token`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total` int(10) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
+(9, '200', 30, '2021-08-25 13:33:15', '2021-08-25 13:33:15'),
+(10, '201', 50, '2021-08-25 13:33:26', '2021-08-25 13:33:26');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `semesters`
 --
 
@@ -314,8 +337,12 @@ CREATE TABLE `semester_courses` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `semester_id` int(10) NOT NULL,
   `course_id` int(10) NOT NULL,
+  `teacher_id` int(10) NOT NULL,
+  `room_id` int(10) NOT NULL,
   `semester_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `course_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `teacher_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `room_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -324,10 +351,8 @@ CREATE TABLE `semester_courses` (
 -- Dumping data for table `semester_courses`
 --
 
-INSERT INTO `semester_courses` (`id`, `semester_id`, `course_id`, `semester_name`, `course_name`, `created_at`, `updated_at`) VALUES
-(2, 29, 4, 'T2@gmail.com', 'CSE-1212', '2021-08-25 14:09:45', '2021-08-25 14:09:45'),
-(3, 27, 2, 't1', 'CSE-1211', '2021-08-25 14:17:40', '2021-08-25 14:17:40'),
-(4, 9, 2, '200', 'CSE-1211', '2021-08-27 12:25:29', '2021-08-27 12:25:29');
+INSERT INTO `semester_courses` (`id`, `semester_id`, `course_id`, `teacher_id`, `room_id`, `semester_name`, `course_name`, `teacher_name`, `room_name`, `created_at`, `updated_at`) VALUES
+(5, 10, 2, 27, 10, '201', 'CSE-1211', 't1', '201', '2021-08-28 13:10:32', '2021-08-28 13:10:32');
 
 -- --------------------------------------------------------
 
@@ -392,6 +417,7 @@ INSERT INTO `teacher_exam_routines` (`id`, `routine_id`, `teacher_id`, `teacher_
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nick_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mobile` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `designation` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -409,11 +435,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `designation`, `department`, `studentId`, `batch`, `session`, `password`, `userType`, `created_at`, `updated_at`) VALUES
-(26, 'Admins', 'admin@gmail.com', '1234567', NULL, NULL, NULL, NULL, NULL, '$2y$10$n9nFgPnyIMlSjHQ2USDFnervaClpw5xO8dQ3PBueWytTHp6Y2nWna', 'Admin', '2021-02-23 22:38:51', '2021-08-22 09:15:40'),
-(27, 't1', 't1@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
-(28, 's2', 's2@gmail.com', '345689', NULL, 'cse', '1213030', '38th (Section D)', 'spring', '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Student', '2021-08-16 11:32:33', '2021-08-16 11:32:33'),
-(29, 'T2@gmail.com', 't2@gmail.com', '0158119898989', 'Senior', 'EEE', NULL, NULL, NULL, '$2y$10$9mrYwpP9KhtBsVK5ix.bR.EFWQzpt7HIoo/Bkfmzn7M..OoYTnGU2', 'Teacher', '2021-08-21 19:07:02', '2021-08-21 19:07:02');
+INSERT INTO `users` (`id`, `name`, `nick_name`, `email`, `mobile`, `designation`, `department`, `studentId`, `batch`, `session`, `password`, `userType`, `created_at`, `updated_at`) VALUES
+(26, 'Admins', '', 'admin@gmail.com', '1234567', NULL, NULL, NULL, NULL, NULL, '$2y$10$n9nFgPnyIMlSjHQ2USDFnervaClpw5xO8dQ3PBueWytTHp6Y2nWna', 'Admin', '2021-02-23 22:38:51', '2021-08-22 09:15:40'),
+(27, 't1', 'EH', 't1@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
+(28, 's2', '', 's2@gmail.com', '345689', NULL, 'cse', '1213030', '38th (Section D)', 'spring', '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Student', '2021-08-16 11:32:33', '2021-08-16 11:32:33'),
+(29, 'T2@gmail.com', 'MHB', 't2@gmail.com', '0158119898989', 'Senior', 'EEE', NULL, NULL, NULL, '$2y$10$9mrYwpP9KhtBsVK5ix.bR.EFWQzpt7HIoo/Bkfmzn7M..OoYTnGU2', 'Teacher', '2021-08-21 19:07:02', '2021-08-21 19:07:02');
 
 --
 -- Indexes for dumped tables
@@ -480,6 +506,12 @@ ALTER TABLE `password_resets`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `semesters`
 --
 ALTER TABLE `semesters`
@@ -523,7 +555,7 @@ ALTER TABLE `batches`
 -- AUTO_INCREMENT for table `class_routines`
 --
 ALTER TABLE `class_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -574,6 +606,12 @@ ALTER TABLE `password_resets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `semesters`
 --
 ALTER TABLE `semesters`
@@ -583,7 +621,7 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `semester_courses`
 --
 ALTER TABLE `semester_courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `teacher_courses`
