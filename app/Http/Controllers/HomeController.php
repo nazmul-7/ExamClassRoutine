@@ -112,7 +112,8 @@ class HomeController extends Controller
         return $query->paginate(10);
     }
     public function admin_class_routineBySession(Request $request){
-        $query =  ClassRoutine::orderBy('id', 'asc')->get();
+        $semester = $request->semester;
+        $query =  ClassRoutine::where('batch_name',$semester)->orderBy('id', 'asc')->get();
         $query->sortBy('start_time');
         $newQuery = $query->groupBy('day');
         $days_data = ['Sunday','Monday',"Tuesday",'Wednesday','Thusday'];

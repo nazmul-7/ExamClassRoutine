@@ -10,12 +10,15 @@
 					<div class="card">
 						<div class="card-header card_header_area">
 							<div class="card-title">Data</div>
+							<div class="card-title">	
+								<Select v-model="filterSemester"  placeholder="Please select a Semester" filterable @on-change="ChangeFilterSemester">
+										<Option v-for="(item,index) in semester_data"  :key="index" :value="item.name" style="width:600px" >{{item.name}}</Option>
+									</Select></div>
 							<div class="d-flex">
-								<div id="example_filter" class="dataTables_filter dataTables_filter_up mr-5">
-									<!-- <label><input type="search" class="form-control form-control-sm" v-model="filterField" @change="searchByEmail"   placeholder="Search" aria-controls="example">
-									<button class="btn btn-primary" @click="searchByEmail"><i class="fa fa-search"></i></button>
-									</label> -->
-								</div>
+								<!-- <div id="example_filter" class="dataTables_filter dataTables_filter_up mr-5">
+							
+								
+								</div> -->
 								<div v-if="authUser.userType == 'Admin'" class="card_add_data btn btn-primary mar_b10" @click="addModal = true">
 									Add New
 								</div> 
@@ -197,6 +200,7 @@ export default {
 			days_data_item:[],
 			times_data:[8,9,10,11,12,1,2,3,4,5],
 			semester_id:'',
+			filterSemester:'',
 			semesterCourseId:'',
 			new_format_routine:{},
 			course_data:[],
@@ -238,6 +242,9 @@ export default {
       }  
     },
 	methods : {
+		ChangeFilterSemester(){
+			this.getAllData()
+		},
 		changeCourse(id){
 			let index = this.course_data.findIndex(d=>d.id == id);
 			this.formItem.teacher_name = this.course_data[index].teacher_name
@@ -323,7 +330,7 @@ export default {
 	 
 		async getAllData(){
 			this.loading = true
-			const res = await this.callApi('get',`app/admin/class_routine/session`)
+			const res = await this.callApi('get',`app/admin/class_routine/session?semester=${this.filterSemester}`)
 			if(res.status == 200){
 				this.new_format_routine = res.data.data
 				this.days_data = res.data.days_data
@@ -340,7 +347,7 @@ export default {
 
 	async created(){
 	   	this.loading = true
-	  	await this.getAllData() 
+	  	// await this.getAllData() 
 		this.loading = false
 
 		const [course,teacher,department,batch,days] = await Promise.all([
