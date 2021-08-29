@@ -9,18 +9,17 @@
 				<div class="col-md-12 col-lg-12">
 					<div class="card">
 						<div class="card-header card_header_area">
-							<div class="card-title">{{filterSemester}}</div>
+							<div class="card-title">Data</div>
 							<div class="card-title">	
 								<Select v-model="filterSemester"  placeholder="Please select a Semester" filterable @on-change="ChangeFilterSemester">
 										<Option v-for="(item,index) in semester_data"  :key="index" :value="item.name" style="width:600px" >{{item.name}}</Option>
-								</Select>
-							</div>
+									</Select></div>
 							<div class="d-flex">
 								<!-- <div id="example_filter" class="dataTables_filter dataTables_filter_up mr-5">
 							
 								
 								</div> -->
-								<div v-if="authUser.userType == 'Admin'" class="card_add_data btn btn-primary mar_b10" @click="addModal = true,errMsg=''">
+								<div v-if="authUser.userType == 'Admin'" class="card_add_data btn btn-primary mar_b10" @click="addModal = true">
 									Add New
 								</div> 
 							</div>
@@ -132,28 +131,60 @@
 			<div class="card m-b-20">
 				<div class="card-body">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<div class="form-group">
 									<label class="form-label" >Semester</label>
 									<Select v-model="semester_id"  placeholder="Please select a Semester" filterable>
-										<Option v-for="(item,index) in semester_data"  :key="index" :value="item.name" >{{item.name}}</Option>
+										<Option v-for="(item,index) in semester_data"  :key="index" :value="item.id" >{{item.name}}</Option>
 									</Select>
 								</div>
 							</div>
-							
-							
-							<div class="col-md-12" v-if="errMsg">
+							<div class="col-md-6" v-if="semester_id">
 								<div class="form-group">
-									<Alert type="error">{{errMsg}}</Alert>
+									<label class="form-label" >Course</label>
+									<Select v-model="semesterCourseId"  placeholder="Please select a course" filterable @on-change="changeCourse">
+										<Option v-for="(item,index) in filter_course"  :key="index" :value="item.id" >{{item.course_name}}</Option>
+									</Select>
 								</div>
 							</div>
-						
+							<div class="col-md-6" v-if="semesterCourseId">
+								<div class="form-group">
+									<label class="form-label" >Teacher</label>
+									<input type="text" class="form-control" disabled  v-model="formItem.teacher_name"  placeholder="Teacher Name">
+								</div>
+							</div>
+							<div class="col-md-6" v-if="semesterCourseId">
+								<div class="form-group">
+									<label class="form-label" >Room Number</label>
+									<input type="text" class="form-control" disabled  v-model="formItem.room"  placeholder="Room">
+								</div>
+							</div>
+								<div class="col-md-12" v-if="semesterCourseId">
+								<div class="form-group">
+									<label class="form-label" >Day</label>
+									<Select v-model="formItem.day"  placeholder="Please select a day" filterable>
+                                        <Option v-for="(item,index) in days_data_item"  :key="index" :value="item.day" >{{item.day}}</Option>
+                                    </Select>
+								</div>
+							</div>
+							<div class="col-md-6" v-if="semesterCourseId">
+								<div class="form-group">
+									<label class="form-label" >Start Time</label>
+									<input class="form-control" id="exampleInputname" type="time" step="60" v-model="formItem.start_time" name="appt" min="08:00" max="20:00" @change="startTimeChanged">
+								</div>
+							</div>
+							<div class="col-md-6" v-if="semesterCourseId">
+								<div class="form-group">
+									<label class="form-label" >End Time</label>
+									<input class="form-control" id="exampleInputname" type="time" disabled step="60" v-model="formItem.end_time" name="appt" min="08:00" max="20:00">
+								</div>
+							</div>
 						</div>
 				</div>
 			</div>
 			<div slot="footer">
-					<button type="submit" v-if="loading == false" class="btn btn-primary" @click="generateRoutine">Generate Class Routine </button>
-					<button type="submit" class="btn btn-primary" v-else disabled >Please Wait.. </button>
+					<button type="submit" v-if="loading == false" class="btn btn-primary" @click="addItem">Add </button>
+					<button type="submit" class="btn btn-primary" v-else disabled >Adding.. </button>
 				    <button type="submit" class="btn btn-info" @click="addModal = false">Close </button>
 			</div>
 		</Modal>
@@ -168,9 +199,8 @@ export default {
 			days_data:['Sunday','Monday',"Tuesday",'Wednesday','Thusday'],
 			days_data_item:[],
 			times_data:[8,9,10,11,12,1,2,3,4,5],
-			errMsg:'',
 			semester_id:'',
-			filterSemester:1,
+			filterSemester:'',
 			semesterCourseId:'',
 			new_format_routine:{},
 			course_data:[],
@@ -209,7 +239,7 @@ export default {
         else arr = this.course_data
 
         return arr
-      }
+      }  
     },
 	methods : {
 		ChangeFilterSemester(){
@@ -278,29 +308,6 @@ export default {
             
             this.loading = false
 		},		 
-		async generateRoutine(){
-			if(this.semester_id =='') return this.i('Semester is required')
-			let index = this.semester_data.findIndex(d=>d.name == this.semester_id)
-
-			this.loading = true
-        	let res = await this.callApi('get',`app/admin/class_routine/generate/${this.semester_data[index].id}`)
-			if(res.status==200 || res.status == 201){
-				this.s('Routine Generated successfully!')
-				history.pushState({}, null, `/admin_class_routine?semester=${this.semester_id}`)
-				location.reload()
-				this.allItems.unshift(res.data);
-				this.addModal=false
-				this.pagesList = []
-			}
-			else if(res.status==401){
-				this.errMsg = res.data.msg
-			}
-			else{
-				this.swr();
-            }
-            
-            this.loading = false
-		},		 
 		//Delete
 		async product_delete(id,index){
 			if(!confirm("Are you sure to delete this routine")){
@@ -339,12 +346,9 @@ export default {
 	}, 
 
 	async created(){
-		if(this.$route.query.semester){
-			this.filterSemester = this.$route.query.semester
-			this.loading = true
-		   	await this.getAllData() 
-		 	this.loading = false
-		}
+	   	this.loading = true
+	  	// await this.getAllData() 
+		this.loading = false
 
 		const [course,teacher,department,batch,days] = await Promise.all([
 			this.callApi('get','app/admin/all_semester_courses'),
@@ -365,17 +369,6 @@ export default {
 		for(let d of this.days_data_item){
 			this.days_data.push(d.day)
 		}
-
-		if(!this.$route.query.semester){
-
-			this.filterSemester = this.semester_data[0].name
-	
-			this.loading = true
-			  await this.getAllData() 
-			this.loading = false
-		}
-
-		
 	}, 
 	
 }

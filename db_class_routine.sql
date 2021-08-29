@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2021 at 04:44 PM
+-- Generation Time: Aug 29, 2021 at 10:37 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -35,18 +35,6 @@ CREATE TABLE `batches` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `batches`
---
-
-INSERT INTO `batches` (`id`, `department`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'BBA', '38th-Section A', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(2, 'CSE', '38th-Section B', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(3, 'CSE', '38th-Section C', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(4, 'CSE', '38th-Section D', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(6, 'CSE', '38th-Section E', '2021-08-18 23:23:05', '2021-08-18 23:23:18'),
-(7, 'EEE', '1', '2021-08-22 01:02:12', '2021-08-22 01:02:12');
-
 -- --------------------------------------------------------
 
 --
@@ -74,15 +62,30 @@ CREATE TABLE `class_routines` (
 --
 
 INSERT INTO `class_routines` (`id`, `day`, `start_time`, `end_time`, `hours`, `department_name`, `course_name`, `semister`, `batch_name`, `teacher_name`, `room`, `created_at`, `updated_at`) VALUES
-(6, 'Sunday', 9, 10, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'MHN', '331', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(7, 'Sunday', 10, 11, 1, 'CSE', 'CSE 133', 'Spring', '2019-20 A', 'EH', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(8, 'Sunday', 11, 12, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'EH', '329', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(9, 'Monday', 8, 9, 1, 'CSE', 'EEE 109D', 'Spring', '2019-20 A', 'EEE', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(10, 'Monday', 9, 10, 1, 'CSE', 'MAT 102D', 'Spring', '2019-20 A', 'MAT', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(11, 'Monday', 10, 1, 3, 'CSE', 'CSE 134 (A)', 'Spring', '2019-20 A', 'EH', '304', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(12, 'Tuesday', 10, 11, 1, 'CSE', 'CSE 133', 'Spring', '2019-20 A', 'EH', 'Gallery 2', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(13, 'Tuesday', 9, 10, 1, 'CSE', 'CSE 143 (A)', 'Spring', '2019-20 A', 'MHN', '331', '2021-08-22 13:03:18', '2021-08-22 13:03:18'),
-(14, 'Sunday', 8, 9, 0, 'CSE', 'CSE-1211', NULL, '201', 't1', '201', '2021-08-28 08:41:28', '2021-08-28 08:41:28');
+(506, 'Sunday', 8, 9, 1, 'CSE', 'CSE 143', 'Spring', 'Session: 2019-20, Section A', 'MHN', '331', NULL, NULL),
+(507, 'Sunday', 9, 10, 1, 'CSE', 'CSE-132', 'Spring', 'Session: 2019-20, Section A', 'EH', 'Gallery 2', NULL, NULL),
+(508, 'Sunday', 10, 11, 1, 'CSE', 'CSE 133', 'Spring', 'Session: 2019-20, Section A', 'EH', '329', NULL, NULL),
+(509, 'Sunday', 2, 5, 3, 'CSE', 'CSE 134', 'Spring', 'Session: 2019-20, Section A', 'EH', '304', NULL, NULL),
+(510, 'Monday', 8, 9, 1, 'CSE', 'EEE 109D', 'Spring', 'Session: 2019-20, Section A', 'EEE', 'Gallery 2', NULL, NULL),
+(511, 'Monday', 9, 10, 1, 'CSE', 'MAT 102D', 'Spring', 'Session: 2019-20, Section A', 'MAT', 'Gallery 2', NULL, NULL),
+(512, 'Monday', 10, 11, 1, 'CSE', 'ENG 101D', 'Spring', 'Session: 2019-20, Section A', 'ENG', 'Gallery 2', NULL, NULL),
+(513, 'Monday', 11, 12, 1, 'CSE', 'ENG 102D', 'Spring', 'Session: 2019-20, Section A', 'ENG', 'Gallery 2', NULL, NULL),
+(514, 'Tuesday', 8, 11, 3, 'CSE', 'EEE 110D', 'Spring', 'Session: 2019-20, Section A', 'EEE', 'EEE Lab', NULL, NULL),
+(515, 'Tuesday', 11, 12, 1, 'CSE', 'CSE 143', 'Spring', 'Session: 2019-20, Section A', 'MHN', '331', NULL, NULL),
+(516, 'Tuesday', 12, 1, 1, 'CSE', 'CSE 133', 'Spring', 'Session: 2019-20, Section A', 'EH', '329', NULL, NULL),
+(517, 'Wednesday', 8, 11, 3, 'CSE', 'CSE 134', 'Spring', 'Session: 2019-20, Section A', 'EH', '304', NULL, NULL),
+(518, 'Wednesday', 11, 12, 1, 'CSE', 'EEE 109D', 'Spring', 'Session: 2019-20, Section A', 'EEE', 'Gallery 2', NULL, NULL),
+(519, 'Wednesday', 12, 1, 1, 'CSE', 'MAT 102D', 'Spring', 'Session: 2019-20, Section A', 'MAT', 'Gallery 2', NULL, NULL),
+(520, 'Wednesday', 2, 3, 1, 'CSE', 'ENG 101D', 'Spring', 'Session: 2019-20, Section A', 'ENG', 'Gallery 2', NULL, NULL),
+(521, 'Thusday', 8, 9, 1, 'CSE', 'ENG 102D', 'Spring', 'Session: 2019-20, Section A', 'ENG', 'Gallery 2', NULL, NULL),
+(522, 'Thusday', 9, 10, 1, 'CSE', 'CSE 143', 'Spring', 'Session: 2019-20, Section A', 'MHN', '331', NULL, NULL),
+(523, 'Thusday', 10, 11, 1, 'CSE', 'CSE 133', 'Spring', 'Session: 2019-20, Section A', 'EH', '329', NULL, NULL),
+(524, 'Thusday', 11, 12, 1, 'CSE', 'EEE 109D', 'Spring', 'Session: 2019-20, Section A', 'EEE', 'Gallery 2', NULL, NULL),
+(525, 'Thusday', 12, 1, 1, 'CSE', 'MAT 102D', 'Spring', 'Session: 2019-20, Section A', 'MAT', 'Gallery 2', NULL, NULL),
+(530, 'Sunday', 8, 9, 1, 'CSE', 'CSE 143', 'Spring', 'Session: 2019-20, Section B', 'MHN', '331', NULL, NULL),
+(531, 'Sunday', 9, 10, 1, 'CSE', 'CSE-132', 'Spring', 'Session: 2019-20, Section B', 'EH', '329', NULL, NULL),
+(532, 'Monday', 8, 9, 1, 'CSE', 'CSE 143', 'Spring', 'Session: 2019-20, Section B', 'MHN', '331', NULL, NULL),
+(533, 'Tuesday', 8, 9, 1, 'CSE', 'CSE 143', 'Spring', 'Session: 2019-20, Section B', 'MHN', '331', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -106,9 +109,15 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `code`, `name`, `credit`, `class_time`, `exam_time`, `created_at`, `updated_at`) VALUES
-(2, '', 'CSE-1211', 3, 1, 1, NULL, NULL),
-(4, '', 'CSE-1212', 3, 1, 1, NULL, NULL),
-(5, 'CSE-3011', 'Data Structure', 3, 3, 2, '2021-08-25 13:40:19', '2021-08-25 13:40:19');
+(1, 'CSE 143', 'CSE 143', 3, 1, 1, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(2, 'CSE-132', 'CSE-132', 1, 1, 1, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(3, 'CSE 133', 'CSE 133', 3, 1, 1, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(4, 'CSE 134', 'CSE 134', 2, 3, 3, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(5, 'EEE 109D', 'EEE 109D', 3, 1, 1, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(6, 'MAT 102D', 'MAT 102D', 3, 1, 1, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(7, 'ENG 101D', 'ENG 101D', 2, 1, 1, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(8, 'ENG 102D', 'ENG 102D', 2, 1, 1, '2021-08-29 22:20:48', '2021-08-29 22:20:48'),
+(9, 'EEE 110D', 'EEE 110D', 1, 3, 3, '2021-08-29 22:20:48', '2021-08-29 22:20:48');
 
 -- --------------------------------------------------------
 
@@ -128,9 +137,7 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'CSE', '2021-08-18 23:21:19', '2021-08-18 23:21:19'),
-(3, 'BBA', '2021-08-18 23:21:19', '2021-08-18 23:21:19'),
-(5, 'EEE', '2021-08-18 23:21:19', '2021-08-18 23:21:19');
+(1, 'CSE', '2021-08-18 23:21:19', '2021-08-18 23:21:19');
 
 -- --------------------------------------------------------
 
@@ -302,8 +309,11 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
-(9, '200', 30, '2021-08-25 13:33:15', '2021-08-25 13:33:15'),
-(10, '201', 50, '2021-08-25 13:33:26', '2021-08-25 13:33:26');
+(9, '331', 30, '2021-08-25 13:33:15', '2021-08-25 13:33:15'),
+(10, '329', 30, '2021-08-25 13:33:26', '2021-08-25 13:33:26'),
+(11, 'Gallery 2', 100, '2021-08-25 13:33:26', '2021-08-25 13:33:26'),
+(12, '304', 30, '2021-08-25 13:33:26', '2021-08-25 13:33:26'),
+(13, 'EEE Lab', 30, '2021-08-25 13:33:26', '2021-08-25 13:33:26');
 
 -- --------------------------------------------------------
 
@@ -324,8 +334,8 @@ CREATE TABLE `semesters` (
 --
 
 INSERT INTO `semesters` (`id`, `name`, `total`, `created_at`, `updated_at`) VALUES
-(9, '200', 30, '2021-08-25 13:33:15', '2021-08-25 13:33:15'),
-(10, '201', 50, '2021-08-25 13:33:26', '2021-08-25 13:33:26');
+(1, 'Session: 2019-20, Section A', 25, '2021-08-29 22:19:18', '2021-08-29 22:19:18'),
+(2, 'Session: 2019-20, Section B', 25, '2021-08-29 22:19:18', '2021-08-29 22:19:18');
 
 -- --------------------------------------------------------
 
@@ -352,7 +362,17 @@ CREATE TABLE `semester_courses` (
 --
 
 INSERT INTO `semester_courses` (`id`, `semester_id`, `course_id`, `teacher_id`, `room_id`, `semester_name`, `course_name`, `teacher_name`, `room_name`, `created_at`, `updated_at`) VALUES
-(5, 10, 2, 27, 10, '201', 'CSE-1211', 't1', '201', '2021-08-28 13:10:32', '2021-08-28 13:10:32');
+(1, 1, 1, 31, 9, 'Session: 2019-20, Section A', 'CSE 143', 'MHN', '331', '2021-08-29 16:34:34', '2021-08-29 16:34:34'),
+(2, 1, 2, 30, 11, 'Session: 2019-20, Section A', 'CSE-132', 'EH', 'Gallery 2', '2021-08-29 16:34:51', '2021-08-29 16:34:51'),
+(3, 1, 3, 30, 10, 'Session: 2019-20, Section A', 'CSE 133', 'EH', '329', '2021-08-29 16:35:04', '2021-08-29 16:35:04'),
+(4, 1, 4, 30, 12, 'Session: 2019-20, Section A', 'CSE 134', 'EH', '304', '2021-08-29 16:35:19', '2021-08-29 16:35:19'),
+(5, 1, 5, 32, 11, 'Session: 2019-20, Section A', 'EEE 109D', 'EEE', 'Gallery 2', '2021-08-29 16:35:33', '2021-08-29 16:35:33'),
+(6, 1, 6, 33, 11, 'Session: 2019-20, Section A', 'MAT 102D', 'MAT', 'Gallery 2', '2021-08-29 16:35:54', '2021-08-29 16:35:54'),
+(7, 1, 7, 34, 11, 'Session: 2019-20, Section A', 'ENG 101D', 'ENG', 'Gallery 2', '2021-08-29 16:36:19', '2021-08-29 16:36:19'),
+(8, 1, 8, 34, 11, 'Session: 2019-20, Section A', 'ENG 102D', 'ENG', 'Gallery 2', '2021-08-29 16:36:29', '2021-08-29 16:36:29'),
+(9, 1, 9, 32, 13, 'Session: 2019-20, Section A', 'EEE 110D', 'EEE', 'EEE Lab', '2021-08-29 16:36:39', '2021-08-29 16:36:39'),
+(10, 2, 1, 31, 9, 'Session: 2019-20, Section B', 'CSE 143', 'MHN', '331', '2021-08-29 20:31:39', '2021-08-29 20:31:39'),
+(11, 2, 2, 30, 10, 'Session: 2019-20, Section B', 'CSE-132', 'EH', '329', '2021-08-29 20:31:53', '2021-08-29 20:31:53');
 
 -- --------------------------------------------------------
 
@@ -375,8 +395,15 @@ CREATE TABLE `teacher_courses` (
 --
 
 INSERT INTO `teacher_courses` (`id`, `teacher_id`, `course_id`, `teacher_name`, `course_name`, `created_at`, `updated_at`) VALUES
-(2, 29, 4, 'T2@gmail.com', 'CSE-1212', '2021-08-25 14:09:45', '2021-08-25 14:09:45'),
-(3, 27, 2, 't1', 'CSE-1211', '2021-08-25 14:17:40', '2021-08-25 14:17:40');
+(1, 30, 2, 'EH', 'CSE-132', '2021-08-29 16:32:43', '2021-08-29 16:32:43'),
+(2, 30, 3, 'EH', 'CSE 133', '2021-08-29 16:32:49', '2021-08-29 16:32:49'),
+(3, 31, 1, 'MHN', 'CSE 143', '2021-08-29 16:33:12', '2021-08-29 16:33:12'),
+(4, 30, 4, 'EH', 'CSE 134', '2021-08-29 16:33:29', '2021-08-29 16:33:29'),
+(5, 32, 5, 'EEE', 'EEE 109D', '2021-08-29 16:33:35', '2021-08-29 16:33:35'),
+(6, 32, 9, 'EEE', 'EEE 110D', '2021-08-29 16:33:43', '2021-08-29 16:33:43'),
+(7, 33, 6, 'MAT', 'MAT 102D', '2021-08-29 16:33:50', '2021-08-29 16:33:50'),
+(8, 34, 7, 'ENG', 'ENG 101D', '2021-08-29 16:34:01', '2021-08-29 16:34:01'),
+(9, 34, 8, 'ENG', 'ENG 102D', '2021-08-29 16:34:07', '2021-08-29 16:34:07');
 
 -- --------------------------------------------------------
 
@@ -392,21 +419,6 @@ CREATE TABLE `teacher_exam_routines` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `teacher_exam_routines`
---
-
-INSERT INTO `teacher_exam_routines` (`id`, `routine_id`, `teacher_id`, `teacher_name`, `created_at`, `updated_at`) VALUES
-(3, 0, 0, 't1', '2021-08-18 11:39:35', '2021-08-18 11:39:35'),
-(6, 0, 27, 't1', NULL, NULL),
-(7, 0, 29, 'T2@gmail.com', NULL, NULL),
-(8, 7, 27, 't1', '2021-08-22 08:33:03', '2021-08-22 08:33:03'),
-(9, 7, 29, 'T2@gmail.com', '2021-08-22 08:33:03', '2021-08-22 08:33:03'),
-(10, 8, 29, 'T2@gmail.com', '2021-08-22 10:38:02', '2021-08-22 10:38:02'),
-(11, 8, 27, 't1', '2021-08-22 10:38:02', '2021-08-22 10:38:02'),
-(12, 9, 27, 't1', '2021-08-22 13:11:30', '2021-08-22 13:11:30'),
-(13, 9, 29, 'T2@gmail.com', '2021-08-22 13:11:30', '2021-08-22 13:11:30');
 
 -- --------------------------------------------------------
 
@@ -437,9 +449,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `nick_name`, `email`, `mobile`, `designation`, `department`, `studentId`, `batch`, `session`, `password`, `userType`, `created_at`, `updated_at`) VALUES
 (26, 'Admins', '', 'admin@gmail.com', '1234567', NULL, NULL, NULL, NULL, NULL, '$2y$10$n9nFgPnyIMlSjHQ2USDFnervaClpw5xO8dQ3PBueWytTHp6Y2nWna', 'Admin', '2021-02-23 22:38:51', '2021-08-22 09:15:40'),
-(27, 't1', 'EH', 't1@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
 (28, 's2', '', 's2@gmail.com', '345689', NULL, 'cse', '1213030', '38th (Section D)', 'spring', '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Student', '2021-08-16 11:32:33', '2021-08-16 11:32:33'),
-(29, 'T2@gmail.com', 'MHB', 't2@gmail.com', '0158119898989', 'Senior', 'EEE', NULL, NULL, NULL, '$2y$10$9mrYwpP9KhtBsVK5ix.bR.EFWQzpt7HIoo/Bkfmzn7M..OoYTnGU2', 'Teacher', '2021-08-21 19:07:02', '2021-08-21 19:07:02');
+(30, 'EH', 'EH', 'eh@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
+(31, 'MHN', 'MHN', 'mhn@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
+(32, 'EEE', 'EEE', 'eee@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
+(33, 'MAT', 'MAT', 'mat@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45'),
+(34, 'ENG', 'ENG', 'eng@gmail.com', '123', 'Lecturer', 'CSE', NULL, NULL, NULL, '$2y$10$4LQuPN4SI0VquyzCblIUouaB6zpmdmuc1vkDWJDF5yWFlKFe.mhr6', 'Teacher', '2021-08-16 08:48:45', '2021-08-16 08:48:45');
 
 --
 -- Indexes for dumped tables
@@ -549,19 +564,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `batches`
 --
 ALTER TABLE `batches`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `class_routines`
 --
 ALTER TABLE `class_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=534;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -609,37 +624,37 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `semesters`
 --
 ALTER TABLE `semesters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `semester_courses`
 --
 ALTER TABLE `semester_courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `teacher_courses`
 --
 ALTER TABLE `teacher_courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `teacher_exam_routines`
 --
 ALTER TABLE `teacher_exam_routines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

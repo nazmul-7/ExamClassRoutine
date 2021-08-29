@@ -52,6 +52,7 @@ Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
     Route::get('all_user_pagi', 'HomeController@all_user_pagi');
 
     Route::get('/admin/class_routine', 'HomeController@admin_class_routine');
+    Route::get('/admin/class_routine/generate/{id}', 'HomeController@generate_class_routine');
     Route::get('/admin/class_routine/session', 'HomeController@admin_class_routineBySession');
     Route::post('/admin/class_routine/store', 'HomeController@admin_class_routine_store');
     Route::post('/admin/class_routine/delete', 'HomeController@admin_class_routine_delete');

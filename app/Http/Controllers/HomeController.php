@@ -340,6 +340,10 @@ class HomeController extends Controller
 
 
     public function all_semester_courses(Request $request){
+        $semester = $request->semester;
+        if($semester){
+            return  SemesterCourse::with('course')->where('semester_id',$semester)->get();
+        }
         return  SemesterCourse::with('course')->get();
     }
     public function all_semester_courses_add(Request $request){
@@ -370,5 +374,131 @@ class HomeController extends Controller
     public function admin_class_times_edit(Request $request){
         $data = $request->all();
         return  DeptClassTime::where('id',1)->update($data);
+    }
+
+
+    public function generate_class_routine($id){
+
+        $semesterCourse = SemesterCourse::with('course')->where('semester_id',$id)->get();
+
+        if(sizeof($semesterCourse) == 0){
+            return response()->json([
+                'msg' => "No courses found in this semester!",
+            ], 401); 
+        }
+        
+        // return $semesterCourse;
+        $formatedSemesterCourse = [];
+        foreach ($semesterCourse as  $value) {
+            $ob = [
+                'id'=> $value->id,
+                'course_name'=>$value->course_name,
+                'semester_name'=>$value->semester_name,
+                'room_name'=>$value->room_name,
+                'teacher_name'=>$value->teacher_name,
+                'totalClass'=>$value->course->credit,
+                'perHour'=>$value->course->class_time,
+                'usedClass'=>0,
+            ];
+            array_push($formatedSemesterCourse,$ob);
+        }
+        
+        ClassRoutine::where('batch_name',$formatedSemesterCourse[0]['semester_name'])->delete();
+
+        $days = DeptClassDay::all();
+        $times = [8,9,10,11,12,2,3,4];
+
+        $routine_data = [];
+        $semesterCourse_length = sizeof($semesterCourse);
+        $days_length = sizeof($days);
+        $times_length = sizeof($times);
+        $currentSemesterCourseIndex=0;
+
+
+        for($d = 0 ; $d < $days_length;$d++){
+            $skip = 2;
+            $t = 0;
+            $usedCourse=[];
+            while($t +$skip < $times_length){
+               
+                $next3= true;
+                while($formatedSemesterCourse[$currentSemesterCourseIndex]['usedClass'] >= $formatedSemesterCourse[$currentSemesterCourseIndex]['totalClass']){
+                    array_push($usedCourse,$formatedSemesterCourse[$currentSemesterCourseIndex]['id']);
+                    $currentSemesterCourseIndex++;
+                    $currentSemesterCourseIndex = $currentSemesterCourseIndex == $semesterCourse_length ? 0 : $currentSemesterCourseIndex; 
+                    if(sizeof($usedCourse) == $semesterCourse_length){
+                        $next3 = false;
+                        break;
+                    }
+
+                }
+                if($next3 == false) {
+                    break;
+                }
+                if($formatedSemesterCourse[$currentSemesterCourseIndex]['perHour'] > 1){
+                    $next1= true;
+                    $next2= true;
+                    $time_now= $times[$t];
+                    $temp_hours = $formatedSemesterCourse[$currentSemesterCourseIndex]['perHour'];
+                    while($temp_hours > 1){
+                        $time_now++;
+                        $temp_hours--;
+                        if($time_now == 13) {
+                            $next1 = false;
+                            break;
+                        }
+                        $last_class = ($time_now+$skip ) >10 ? 16 : 4; 
+                        if($time_now+$skip > $last_class) {
+                            $next2 = false;
+                            break;
+                        }
+                    }
+
+                    if($next1 == false){
+                        $t ++;
+                        $skip--;
+                        continue;
+                    }
+                    if($next2 == false){
+                        break;
+                    }
+                }
+               
+
+                $hours = $formatedSemesterCourse[$currentSemesterCourseIndex]['perHour'];
+                $ob = [
+                    'day'=>$days[$d]['day'],
+                    'start_time'=>$times[$t],
+                    'end_time'=>$times[$t] == 12 ? 1 : $times[$t]+$hours,
+                    'hours'=>$hours,
+                    'semister'=>'Spring',
+                    'department_name'=>'CSE',
+                    'batch_name'=>$formatedSemesterCourse[$currentSemesterCourseIndex]['semester_name'],
+                    'course_name'=>$formatedSemesterCourse[$currentSemesterCourseIndex]['course_name'],
+                    'teacher_name'=>$formatedSemesterCourse[$currentSemesterCourseIndex]['teacher_name'],
+                    'room'=>$formatedSemesterCourse[$currentSemesterCourseIndex]['room_name'],
+                ];
+                array_push($routine_data,$ob);
+                array_push($usedCourse,$formatedSemesterCourse[$currentSemesterCourseIndex]['id']);
+                
+                $formatedSemesterCourse[$currentSemesterCourseIndex]['usedClass']++;
+                $currentSemesterCourseIndex++;
+                $currentSemesterCourseIndex = $currentSemesterCourseIndex == $semesterCourse_length ? 0 : $currentSemesterCourseIndex; 
+                $t += $hours;
+                if(sizeof($usedCourse) == $semesterCourse_length){
+                    $next3 = false;
+                    break;
+                }
+
+            }
+            // \Log::info($usedCourse);
+        }
+
+        ClassRoutine::insert($routine_data);
+
+        
+
+
+        return $routine_data;
     }
 }

@@ -10,6 +10,11 @@
 						<div class="card">
 							<div class="card-header card_header_area">
 								<div class="card-title">Semester Courses Data</div>
+								<div class="card-title">	
+								<Select v-model="filterSemester"  placeholder="Please select a Semester" filterable @on-change="getData">
+									<Option v-for="(item,index) in semester_data"  :key="index" :value="item.id" style="width:600px" >{{item.name}}</Option>
+								</Select>
+							</div>
 								<div class="card_add_data btn btn-primary" @click="addModal = true">
 									Add Semester Courses
 								</div>
@@ -147,6 +152,7 @@ export default {
 			crfObj: {
                     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]')
                 },
+			filterSemester:'',
 			addModal:false,
 			editModal:false,
 			formItem:{
@@ -299,19 +305,22 @@ export default {
 				this.swr();
 			}
 		},
+		async getData(){
+			this.loading = true
+			const res = await this.callApi('get',`app/admin/all_semester_courses?semester=${this.filterSemester}`)
+			if(res.status == 200){
+				this.categoryData = res.data
+			}
+			else{
+				this.swr();
+			}
+			this.loading = false
+		}
 		
 	}, 
 
 	async created(){
-	   this.loading = true
-       const res = await this.callApi('get',`app/admin/all_semester_courses`)
-		if(res.status == 200){
-			this.categoryData = res.data
-		}
-		else{
-			this.swr();
-		}
-        this.loading = false
+		await this.getData();
 
         const [course,batch,teacher,room] = await Promise.all([
             this.callApi('get','app/admin/all_course'),
